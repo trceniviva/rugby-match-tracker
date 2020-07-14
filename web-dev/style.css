@@ -34,3 +34,19 @@ th, td {
     color: white;
     height:200px;
 }
+
+@media only screen and (min-width: 800px) {
+    .field-quadrant {
+        background-color: darkgreen;
+        border: 2px solid white;
+        color: white;
+        height:400px;
+        max-width: 220px;
+    }
+
+    #notes-below-field {
+        display:flex;
+        flex-direction: row;
+        align-content: space-around;
+    }
+}

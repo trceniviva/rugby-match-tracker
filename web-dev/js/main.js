@@ -75,8 +75,8 @@ var seconds = 0, minutes = 0, tenthseconds = 0;
 var secondsOne = 0, minutesOne = 0, tenthsecondsOne = 0; 
 var secondsTwo = 0, minutesTwo = 0, tenthsecondsTwo = 0; 
 var clearState; 
-var clearStateOne; 
-var clearStateTwo; 
+var clearTimeOne; 
+var clearTimeTwo; 
 var tnthsecs, secs, mins;
 var tnthsecsOne, secsOne, minsOne;
 var tnthsecsTwo, secsTwo, minsTwo;
@@ -541,7 +541,7 @@ function scoreHandler(scoreType) {
     if (scoreType === 'try-scored' && game.possession === game.teamOne.name){
         game.teamOne.score.tries = game.teamOne.score.tries += 1;
         game.teamOne.score.total = game.teamOne.score.total += 5;
-        refreshScores () ;
+        refreshScores ();
         lastScore = game.teamOne.name;
 
         tryScoreRow ();  
@@ -575,7 +575,7 @@ function scoreHandler(scoreType) {
         scoreTypeContainer.style.display="none";
     };
     updatePlayDescription();
-    updatePossession()
+    updatePossession();
 }
 
 function conversionHandler (conversionSuccessful) {
@@ -678,19 +678,15 @@ var putOutOfPlay = '';
 
 function lineoutHandler (lineoutWinner) {
     if (lineoutWinner === '1-wins-lineout') {
+        updatePossession();
+        updatePlayDescription();
         runPossessionClockOne();
         game.possession = game.teamOne.name;
         startSeries();
         if (putOutOfPlay === game.teamTwo.name) {
             game.teamOne.lineouts.won = game.teamOne.lineouts.won += 1;
-            updatePossession();
-            
-            updatePlayDescription();
         } else if (putOutOfPlay === game.teamOne.name) {
             game.possession = game.teamOne.name;
-            updatePossession();
-            
-            updatePlayDescription();
             game.lineouts.stolen = game.lineouts.stolen += 1;
             game.teamTwo.lineouts.lost = game.teamTwo.lineouts.lost += 1;
         } 
@@ -722,23 +718,29 @@ function outOfPlayHandler (outOfPlayType) {
         if (game.possession === game.teamTwo.name) {putOutOfPlay = game.teamOne.name};
         if (game.possession != 'none') {}
     } else if (outOfPlayType === 'mark-called') {
-        possessionToggle() ;
-        updatePossession();
+        possessionToggle();
+        stopPossessionClocks();
         actionToggle ();
         updatePlayDescription ();
     } else if (outOfPlayType === 'twenty-two') {
+        stopPossessionClocks();
         possessionToggle() ;
         updatePossession();
         updatePlayDescription();
     } else if (outOfPlayType === 'scrum-five') {
-        if (game.possession != 'none') {}
     }
 }
 
 function markChoiceHandler (markChoice) {
     if (markChoice === 'mark-quick-tap') {
+        possessionToggle();
+        updatePossession();
+        switchPossessionClock();
     } else if (markChoice === 'mark-to-touch') {
         putOutOfPlay = game.possession;
+        possessionToggle();
+        updatePossession();
+        updatePlayDescription();
     } else if (markChoice === 'mark-kicked-in') {
     }
 }
@@ -850,6 +852,7 @@ function pgHandler (pgResult) {
 scrumInfButton.addEventListener('click', function doScrumStuff(){
     stopPossessionClocks();
     endSeries();
+    updatePossession();
 })
 
 function scrumCauseHandler (scrumCause) {
@@ -1018,7 +1021,6 @@ function freekickChoiceHandler (fkChoice) {
             game.possession = game.teamOne.name;
             runPossessionClockOne();
             updatePossession ();
-
             updatePlayDescription ();}
         }
     else if (fkChoice === 'fk-to-touch') {

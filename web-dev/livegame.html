@@ -35,12 +35,12 @@
     <!-- Page Title & Game Half -->
     <!-- ###################### -->
     <div class="container">
-        <div class="row">
+        <div class="row mt-3">
             <div class="col text-center font-weight-bold">
-                <p class="text-buff">Live Game</p>
+                <p class="text-buff h4">Live Game</p>
             </div>
             <div class="col text-center font-weight-bold">
-                <p id="current-half" class="text-buff">First Half</p>
+                <p id="current-half" class="text-buff h4">First Half</p>
             </div>
         </div>
     </div>
@@ -49,21 +49,21 @@
     <!-- ################## -->
     <div class="container">
         <div class="row text-center">
-            <div class="col">
-                <p class="box-team-name teamOneInputReplacer" id="team-1-name">Team 1</p>
+            <div class="col ml-5 mr-5">
+                <p class="box-team-name teamOneInputReplacer h5 border color-team1" id="team-1-name">Team 1</p>
                 <div>
-                    <p class="box-score" id="team-1-score">0</p>
+                    <p class="box-score h2 border" id="team-1-score">0</p>
                 </div>
             </div>
             <div class="col">
-                <p class="box-team-name teamTwoInputReplacer" id="team-2-name" >Team 2</p>
+                <p class="box-team-name teamTwoInputReplacer h5 border color-team2" id="team-2-name" >Team 2</p>
                 <div>
-                    <p class="box-score" id="team-2-score">0</p>
+                    <p class="box-score h2 border" id="team-2-score">0</p>
                 </div>
             </div>
             <div class="col">
-                <p class="box-team-name">Game Clock</p>
-                <p class="box-score" id="game-clock">00:00:00</p>
+                <p class="box-team-name h5">Game Clock</p>
+                <p class="box-score h2" id="game-clock">00:00:00</p>
             </div>
         </div>
     </div>
@@ -84,12 +84,10 @@
     <!-- ########################### -->
     <!-- Team One Action & Direction -->
     <!-- ########################### -->
-
-    <div class="container mb-3 text-center">
-        <div class="row">
-            <div class="col">
-                <p id="poss-direction"></p>
-                <p>Series <span id="series-count"></span> | Phase <span id="phase-count"></span></p>
+    <div class="container" id="notes-below-field">
+        <div class="row mx-auto text-center">
+            <div class="col d-flex">
+                <p><span id="poss-direction"></span> Series <span id="series-count"></span>. Phase <span id="phase-count"></span>.</p>
             </div>
         </div>
     </div>
@@ -98,13 +96,17 @@
     <!-- Main Event Buttons -->
     <!-- ################## -->
 
-    <div class="container text-center">
-        <div class="row">
+    <div class="container text-center mx-auto">
+        <div class="row mx-auto">
             <div class="col">
-                <button type="button" class="btn btn-outline-primary mb-3" id="turnover-event" data-toggle="modal" data-target="#turnover-subevents-container">Turnover</button>
-            </div>
-            <div class="col">
-                <button type="button" class="btn btn-outline-primary mb-3" id="outofplay-event" data-toggle="modal" data-target="#ball-outofplay-subevents-container">Ball Out of Play</button>
+                <div class="row">
+                    <div class="col mx-auto">
+                        <button type="button" class="mx-auto btn btn-outline-primary mb-3" id="turnover-event" data-toggle="modal" data-target="#turnover-subevents-container">Turnover</button>
+                    </div>
+                    <div class="col mx-auto">
+                        <button type="button" class="mx-auto btn btn-outline-primary mb-3" id="outofplay-event" data-toggle="modal" data-target="#ball-outofplay-subevents-container">Ball Out of Play</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -117,7 +119,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <button type="button" id="score-event" class="btn btn-success btn-block mb-3" data-toggle="modal" data-target="#score-type-container" >Score</button>
+                <button type="button" id="score-event" class="col-3 mx-auto btn btn-success btn-block mb-3" data-toggle="modal" data-target="#score-type-container" >Score</button>
             </div>
         </div>
     </div>
@@ -143,7 +145,7 @@
 
     <div class="row">
         <div class="col">
-            <button type="button" class="btn btn-primary btn-block mb-3" data-toggle="modal" data-target="#halftime-stats" id="half-time" onClick="handleHalftime()">Half Time</button>
+            <button type="button" class="col-3 btn btn-primary btn-block mx-auto mb-3" data-toggle="modal" data-target="#halftime-stats" id="half-time" onClick="handleHalftime()">Half Time</button>
         </div>
     </div>
 
@@ -317,7 +319,7 @@
                                     <button type="button" class="btn color-defense btn-block mb-3" id="in-touch-defense" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#lineout-container">Into touch off of <span class="teamOnDefenseReplacer">Team 2</span></button>
                                 </div>
                                 <div class="col">
-                                    <button type="button" class="btn color-defense btn-block mb-3" id="mark-called" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#lineout-container">Kicked, mark called by <span class="teamOnDefenseReplacer">Team 2</span></button>
+                                    <button type="button" class="btn color-defense btn-block mb-3" id="mark-called" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#freekick-choice-container">Kicked, mark called by <span class="teamOnDefenseReplacer">Team 2</span></button>
                                 </div>
                             </div>
                             <div class="row">
