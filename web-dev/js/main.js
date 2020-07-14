@@ -531,9 +531,12 @@ function PGScoreRow () {
     score3.innerHTML = "Penalty-goal"; 
 }
 
-function scoreHandler(scoreType) {
+scoreButton.addEventListener('click', function scoreStuff() {
     endSeries();
     stopPossessionClocks();
+})
+
+function scoreHandler(scoreType) {
     if (scoreType === 'try-scored' && game.possession === game.teamOne.name){
         game.teamOne.score.tries = game.teamOne.score.tries += 1;
         game.teamOne.score.total = game.teamOne.score.total += 5;
