@@ -764,14 +764,22 @@
 -->
  
     
-    <table id="possession-table">
+    <table id="possession-clock-table">
         <tr>
-            <th>Time</th>
-            <th>Team in Possession</th>
+            <th>Half</th>
+            <th>Team</th>
+            <th>Time in Possession</th>
         </tr>
         <tr>
-            <td>00:00:00</td>
-            <td>None</td>
+            <td class="half-replacer">First Half</td>
+            <td class="teamOneInputReplacer">Team 1</td>
+            <td id="team-1-possession-clock">00:00:00</td>
+            
+        </tr>
+        <tr>
+            <td class="half-replacer">First Half</td>
+            <td class="teamTwoInputReplacer">Team 2</td>
+            <td><span id="team-2-possession-clock">00:00:00</span></td>
         </tr>
     </table>
     <br>

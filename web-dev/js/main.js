@@ -5,6 +5,8 @@ const game = {
     direction: '',
     action: '',
     series: {
+        half: 'First',
+        seriesHalf: [],
         seriesStartTime:[],
         seriesEndTime: [],
         seriesCount: [],
@@ -70,8 +72,14 @@ var scoreTable = document.getElementById("score-table")
 var count = 0; 
 var clearTime; 
 var seconds = 0, minutes = 0, tenthseconds = 0; 
+var secondsOne = 0, minutesOne = 0, tenthsecondsOne = 0; 
+var secondsTwo = 0, minutesTwo = 0, tenthsecondsTwo = 0; 
 var clearState; 
+var clearStateOne; 
+var clearStateTwo; 
 var tnthsecs, secs, mins;
+var tnthsecsOne, secsOne, minsOne;
+var tnthsecsTwo, secsTwo, minsTwo;
 
 const startGame = document.getElementById("start-game")
 const possessionDirection = document.getElementById("poss-direction")
@@ -148,7 +156,7 @@ function getNames () {
     game.teamTwo.color = teamTwoColorInput.value;
 }
 
-function startWatch( ) {
+function startWatch (  ) {
     if ( seconds === 60 ) { seconds = 0; minutes = minutes += 1; } 
     if ( tenthseconds === 10) { tenthseconds = 0; seconds = seconds += 1; }
     mins = ( minutes < 10 ) ? ( '0' + minutes + ':' ) : ( minutes + ':' ); 
@@ -163,8 +171,57 @@ function startTime() {
     tenthseconds = 0;
     seconds = 0;
     minutes = 0;
-    startWatch( );      
+    startWatch();      
  }
+
+const teamOnePossessionClock = document.getElementById("team-1-possession-clock");
+var oneClockRunning = false;
+const teamTwoPossessionClock = document.getElementById("team-2-possession-clock");
+var twoClockRunning = false;
+
+ function runPossessionClockOne (  ) {
+    if (twoClockRunning ===true) { stopWatchTwo(); twoClockRunning = false;};
+    oneClockRunning = true;
+    if ( secondsOne === 60 ) { secondsOne = 0; minutesOne = minutesOne += 1; } 
+    if ( tenthsecondsOne === 10) { tenthsecondsOne = 0; secondsOne = secondsOne += 1; }
+    minsOne = ( minutesOne < 10 ) ? ( '0' + minutesOne + ':' ) : ( minutesOne + ':' ); 
+    secsOne = ( secondsOne < 10 ) ? ( '0' + secondsOne + ':') : ( secondsOne + ':'); 
+    tnthsecsOne = (tenthsecondsOne < 10) ? ( '0' + tenthsecondsOne) : (tenthsecondsOne);
+    possessionOneTime = minsOne + secsOne + tnthsecsOne;
+    teamOnePossessionClock.innerHTML = possessionOneTime; 
+    tenthsecondsOne++; 
+    clearTimeOne = setTimeout( "runPossessionClockOne( )", 100 ); 
+}
+
+function stopWatchOne( ) {clearTimeout(clearTimeOne)};
+
+
+function runPossessionClockTwo (  ) {
+    if (oneClockRunning ===true) { stopWatchOne(); oneClockRunning = false;};
+    twoClockRunning = true;
+    if ( secondsTwo === 60 ) { secondsTwo = 0; minutesTwo = minutesTwo += 1; } 
+    if ( tenthsecondsTwo === 10) { tenthsecondsTwo = 0; secondsTwo = secondsTwo += 1; }
+    minsTwo = ( minutesTwo < 10 ) ? ( '0' + minutesTwo + ':' ) : ( minutesTwo + ':' ); 
+    secsTwo = ( secondsTwo < 10 ) ? ( '0' + secondsTwo + ':') : ( secondsTwo + ':'); 
+    tnthsecsTwo = (tenthsecondsTwo < 10) ? ( '0' + tenthsecondsTwo) : (tenthsecondsTwo);
+    possessionTwoTime = minsTwo + secsTwo + tnthsecsTwo;
+    teamTwoPossessionClock.innerHTML = possessionTwoTime; 
+    tenthsecondsTwo++; 
+    clearTimeTwo = setTimeout( "runPossessionClockTwo( )", 100 ); 
+}
+
+function stopWatchTwo( ) {clearTimeout(clearTimeTwo)};
+
+function stopPossessionClocks () {
+    stopWatchOne();
+    stopWatchTwo();
+}
+
+function switchPossessionClock () {
+    if (oneClockRunning === true) {
+        runPossessionClockTwo();
+    } else {runPossessionClockOne();}
+}
 
 function startingSides () {
     if ( (game.teamOne.openingKick && game.teamOne.startsLeft && firstHalf) ||
@@ -236,27 +293,12 @@ function startGameFunctions () {
     updateColors();
 };
 
-function newPossessionRow () {
-    var newPossessionRow = possessionTable.insertRow(1);
-    var poss1 = newPossessionRow.insertCell(0);
-    var poss2 = newPossessionRow.insertCell(1);
-    poss1.innerHTML = mins + secs + tnthsecs;
-    poss2.innerHTML = game.possession;
-}
-
-function nonePossessionRow () {
-	game.possession = 'none';
-	var newPossessionRow = possessionTable.insertRow(1);
-    var poss1 = newPossessionRow.insertCell(0);
-    var poss2 = newPossessionRow.insertCell(1);
-    poss1.innerHTML = mins + secs + tnthsecs;
-    poss2.innerHTML = game.possession;
-}
-
 function possessionToggle () {
     if (game.possession === game.teamOne.name){
+        switchPossessionClock ()
         game.possession = game.teamTwo.name
     } else if (game.possession === game.teamTwo.name) {
+        switchPossessionClock ()
         game.possession = game.teamOne.name
     } else {game.possession = 'None'};
     
@@ -271,7 +313,8 @@ function actionToggle () {
 }
 
 function startSeries () {
-    game.series.seriesStartTime.push(matchTime)
+    game.series.seriesHalf.push(game.series.half);
+    game.series.seriesStartTime.push(matchTime);
     game.series.currSeries = game.series.currSeries += 1;
     game.series.currPhases = 1;
     phaseCountTracker.innerHTML = game.series.currPhases;
@@ -285,7 +328,8 @@ function newPhase () {
 }
 
 function endSeries () {
-    game.series.seriesEndTime.push(matchTime)
+    game.series.seriesHalf.push(game.series.half);
+    game.series.seriesEndTime.push(matchTime);
     game.series.seriesCount.push(game.series.currSeries);
     game.series.phaseCount.push(game.series.currPhases);
     phaseCountTracker.innerHTML = game.series.currPhases;
@@ -313,14 +357,14 @@ function kickRecovered (teamRecovered) {
         possessionDirection.innerHTML = "";
         game.possession = game.teamOne.name;
         game.action = " attacking from ";
-        newPossessionRow ()
         startSeries();
+        runPossessionClockOne();
     } else if (teamRecovered === 'team-2-recovered') {
         possessionDirection.innerHTML = "";
         game.possession = game.teamTwo.name;
         game.action = " defending on ";
-        newPossessionRow ();
-        startSeries();}
+        startSeries();
+        runPossessionClockTwo();}
         else if (teamRecovered === 'neither-recovered') {
         };
         updatePossession();
@@ -330,7 +374,9 @@ function kickRecovered (teamRecovered) {
 
 
 
-function stopWatch( ) {clearTimeout(clearTime)};
+function stopWatch( ) {clearTimeout(clearTime);
+    stopWatchOne();
+    stopWatchTwo();};
 
 stopButton.addEventListener('click',stopWatch);
 restartButton.addEventListener('click', startWatch);
@@ -340,8 +386,15 @@ restartButton.addEventListener('click', startWatch);
 ### Halftime Functionality ###
 ########################### */
 
+const replaceHalfs = document.querySelectorAll(".half-replacer")
+
 function handleHalftime () {
     endSeries();
+    stopWatchOne();
+    stopWatchTwo();
+    game.series.half = 'Second';
+    for (i=0; i < replaceHalfs.length; i++) {replaceHalfs[i].innerHTML = 'Second Half';};
+    game.series.seriesCount = 0;
     firstHalf = false;
     clearTimeout(clearTime);
     tenthseconds = 0;
@@ -482,6 +535,7 @@ function PGScoreRow () {
 
 function scoreHandler(scoreType) {
     endSeries();
+    stopPossessionClocks();
     if (scoreType === 'try-scored' && game.possession === game.teamOne.name){
         game.teamOne.score.tries = game.teamOne.score.tries += 1;
         game.teamOne.score.total = game.teamOne.score.total += 5;
@@ -553,12 +607,14 @@ function restartHandler (getsRestart) {
         possessionDirection.innerHTML = ""
         game.possession = game.teamOne.name;
         game.action = " attacking from ";
+        runPossessionClockOne();
         newPossessionRow();
         startSeries();
     } else if (getsRestart === 'team-2-restart') {
         possessionDirection.innerHTML = ""
         game.possession = game.teamTwo.name;
         game.action = " defending on ";
+        runPossessionClockTwo();
         newPossessionRow();
         startSeries();
     } else if (getsRestart === 'neither-restart') {
@@ -575,15 +631,8 @@ function restartHandler (getsRestart) {
 const turnoverButton = document.getElementById("turnover-event")
 const turnoverSubevents = document.getElementById("turnover-subevents-container")
 
-function handleTurnover () {
-    turnoverSubevents.style.display = "flex";
-    turnoverSubevents.style.flexWrap = "wrap";
-    turnoverSubevents.style.justifyContent = "space-around";
-}
-
-turnoverButton.addEventListener('click',handleTurnover)
-
 function turnoverHandler (turnoverType) {
+    switchPossessionClock();
     endSeries();
     startSeries();
         if (game.possession === game.teamOne.name && turnoverType === 'turnover-dropped') {
@@ -607,7 +656,6 @@ function turnoverHandler (turnoverType) {
         };
 
             possessionToggle ();
-            newPossessionRow();
             updatePossession();
             updatePlayDescription();
     } 
@@ -621,6 +669,7 @@ var putOutOfPlay = '';
 
 function lineoutHandler (lineoutWinner) {
     if (lineoutWinner === '1-wins-lineout') {
+        game.possession = game.teamOne.name;
         startSeries();
         if (putOutOfPlay === game.teamTwo.name) {
             game.teamOne.lineouts.won = game.teamOne.lineouts.won += 1;
@@ -732,12 +781,12 @@ function penaltyChoiceHandler(pkChoice) {
         if (lastInfringement === game.teamOne.name) {
             game.possession = game.teamTwo.name;
             updatePossession ();
-            newPossessionRow ();
+
             updatePlayDescription ();
         } else if (lastInfringement === game.teamTwo.name) {
             game.possession = game.teamOne.name;
             updatePossession ();
-            newPossessionRow ();
+
             updatePlayDescription ();}
     }
     else if (pkChoice === 'pk-at-goal') {
@@ -781,7 +830,6 @@ function pgHandler (pgResult) {
         game.possession = game.teamOne.name;
         game.action = 
         updatePossession();
-        newPossessionRow ();
         if (lastInfringement === game.teamTwo.name) {
             game.teamOne.score.PGs.missed = game.teamOne.score.PGs.missed += 1;
         } else if (lastInfringement === game.teamOne.name) {
@@ -874,7 +922,6 @@ function scrumHandler (scrumWinner) {
         startSeries();
         game.possession = game.teamOne.name;
         updatePossession();
-        newPossessionRow ();
         game.action = " attacking from "
         updatePlayDescription ();
         if (lastInfringement === game.teamTwo.name) { // scrum to team one
@@ -887,7 +934,6 @@ function scrumHandler (scrumWinner) {
         startSeries();
         game.possession = game.teamTwo.name;
         updatePossession();
-        newPossessionRow ();
         game.action = " defending on "
         updatePlayDescription ();
 
@@ -963,12 +1009,12 @@ function freekickChoiceHandler (fkChoice) {
         if (lastInfringement === game.teamOne.name) {
             game.possession = game.teamTwo.name;
             updatePossession ();
-            newPossessionRow ();
+
             updatePlayDescription ();
         } else if (lastInfringement === game.teamTwo.name) {
             game.possession = game.teamOne.name;
             updatePossession ();
-            newPossessionRow ();
+
             updatePlayDescription ();}
         }
     else if (fkChoice === 'fk-to-touch') {
