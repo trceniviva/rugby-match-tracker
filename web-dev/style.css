@@ -1,0 +1,36 @@
+p {
+    color: #10395c;
+}
+
+table {
+    width:90vw;
+}
+
+table, tr, th, td{
+    text-align: center;
+    border: 1px solid black;
+}
+
+th, td {
+    padding-left:9px;
+    padding-right:9px;
+}
+
+.btn-teamone {
+    color: #ad9e6e;
+    border: 1px solid;
+    border-color: #ad9e6e;
+}
+
+.btn-teamtwo {
+    color: #10395c;
+    border: 1px solid;
+    border-color: #10395c;
+}
+
+.field-quadrant {
+    background-color: darkgreen;
+    border: 2px solid white;
+    color: white;
+    height:200px;
+}

@@ -1,0 +1,246 @@
+body {
+    font-family: 'Avenir', Arial, sans-serif;
+}
+
+p {
+    color: #10395c;
+}
+
+table {
+    width:90vw;
+}
+
+table, tr, th, td{
+    text-align: center;
+    border: 1px solid black;
+}
+
+th, td {
+    padding-left:9px;
+    padding-right:9px;
+}
+
+.cancel-button {
+    position: absolute;
+    top: 0;
+    right:0;
+    background-color: white;
+    border:1px solid black;
+    color: red;
+}
+
+.static-header {
+    display:flex;
+    justify-content: space-between;
+}
+
+.title-area {
+    display:flex;
+    justify-content: space-around;
+}
+
+.page-title {
+    color:#ad9e6e;
+    font-size:1.5em;
+    font-weight: 800;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+#score-box {
+    display:flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.box-team-name {
+    margin-top:2px;
+    margin-bottom:4px;
+}
+
+.box-score {
+    border:1px solid #ad9e6e;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+
+.floating-containers {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    background-color: white;
+    border: 4px solid #ad9e6e;
+    position: absolute;
+    top:20%;
+    left:0;
+    right:0;
+    z-index: 2;
+    width:80%;
+    /* height:100px; */
+}
+
+#kick-recover-container {
+    display:none;
+    padding-bottom: 3vh;
+}
+
+#kick-restart-recover-container {
+    display:none;
+    padding-bottom: 3vh;
+}
+
+/* #match-start-container {
+} */
+
+#team-info-form {
+    /* display:flex; */
+    /* flex-direction: column; */
+    padding-left:10vw;
+    padding-right:10vw;
+    padding-top:3vh;
+    padding-bottom:3vh;
+}
+
+.form-group {
+    display:inline-block;
+    margin-bottom:15px;
+}
+
+#full-field {
+    display:flex;
+}
+
+.field-quadrant {
+    background-color: darkgreen;
+    border: 2px solid white;
+    color: white;
+    font-weight: bolder;
+    width: 25%;
+    height:200px;
+}
+
+#poss-direction {
+    font-size: .8em;
+    margin-top:2px;
+    margin-bottom:3px;
+    text-align: center;
+}
+
+#clock-controls {
+    display:flex;
+    align-content:space-between;
+}
+
+#main-events-container {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.event-item {
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-right:2px;
+    margin-left: 2px;
+    text-align: center;
+    width: 45%;
+    height: 80px;
+    border: 2px solid #ad9e6e;
+}
+
+.clock-item {
+    margin-top:5px;
+    margin-bottom:14px;
+    margin-right:2px;
+    margin-left: 2px;
+    text-align: center;
+    width: 45%;
+    height: 40px;
+    border: 2px solid #ad9e6e;
+}
+
+#score-event {
+    border: 2px solid #ad9e6e;
+    text-align: center;
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-right:4px;
+    margin-left: 4px;
+    width:95%;
+    height:30px;
+}
+
+#score-type-container {
+    display:none;
+}
+
+.subevent-button {
+    width:40%;
+    height: 80px;
+    margin-left:4px;
+    margin-right: 4px;
+    margin-top:4px;
+    margin-bottom:4px;
+    text-align: center;
+}
+
+#try-converted-container {
+    display:none;
+    justify-content: space-around;
+    text-align: center;
+    margin-left:10%;
+    margin-right:10%;
+    background-color: white;
+    border: 4px solid #ad9e6e;
+    position: absolute;
+    top:20%;
+    left:0;
+    right:0;
+    z-index: 2;
+    width:80%;
+    height:100px;
+}
+
+#turnover-subevents-container{
+    display:none;
+}
+
+#ball-outofplay-subevents-container {
+    display: none;
+}
+
+#penalty-subevents-container {
+    display:none;
+}
+
+#scrum-inf-subevents-container {
+    display:none;
+}
+
+#lineout-container {
+    display:none;
+}
+
+#scrum-container {
+    display:none;
+}
+
+#penalty-choice-container {
+    display:none;
+}
+
+#mark-choice-container {
+    display:none;
+}
+
+#kick-at-goal-container {
+    display:none;
+}
+
+#failed-scrum-container {
+    display: none;
+}
+
+#freekick-choice-container {
+    display:none;
+}

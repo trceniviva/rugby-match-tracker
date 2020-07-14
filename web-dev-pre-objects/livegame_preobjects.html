@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="live-game-container">
+        <div class="static-header">
+            <a href="home.html">LOGO HERE</a>
+            <p>My Account</p>
+        </div>
+        <div class="title-area">
+            <p class="page-title">Live Game</p>
+        </div>
+
+        <div id="score-box">
+            <div>
+                <p class="box-team-name teamOneInputReplacer" id="team-1-name">Team 1</p>
+                <div>
+                    <p class="box-score" id="team-1-score">0</p>
+                </div>
+            </div>
+            <div>
+                <p class="box-team-name teamTwoInputReplacer" id="team-2-name" >Team 2</p>
+                <div>
+                    <p class="box-score" id="team-2-score">0</p>
+                </div>
+            </div>
+            <div>
+                <p class="box-team-name">Game Clock</p>
+                <p class="box-score" id="game-clock">00:00:00</p>
+            </div>
+        </div>
+
+        <div id="game-field-container">
+            <div id="full-field">
+                <div class="field-quadrant" id="far-left"></div>
+                <div class="field-quadrant" id="center-left"></div>
+                <div class="field-quadrant" id="center-right"></div>
+                <div class="field-quadrant" id="far-right"></div>
+            </div>
+        </div>
+        <div>
+            <p id="poss-direction"><span class="teamInPossessionReplacer">Team 1</span> attacking to the <span id="direction-of-play">right</span></p>
+        </div>
+
+        <div id="event-tracking-container">
+            <div id="main-events-container">
+                <button type="button" class="event-item" id="turnover-event">Turnover</button>
+                <button type="button" class="event-item" id="outofplay-event">Ball Out of Play</button>
+                <button type="button" class="event-item" id="penalty-event">Penalty Infringement</button>
+                <button type="button" class="event-item" id="scrum-inf-event">Scrum Infringement</button>
+            </div>
+
+            <div class = "floating-containers" id="turnover-subevents-container">
+                <button type="button" class="subevent-button" id="turnover-dropped" onClick = "turnoverHandler(this.id)">Dropped in open play by<span class="teamInPossessionReplacer">Team 1</span></button>
+                <button type="button" class="subevent-button" id="turnover-breakdown" onClick = "turnoverHandler(this.id)">Lost in tackle, ruck, or maul by <span class="teamInPossessionReplacer">Team 1</span></button>
+                <button type="button" class="subevent-button" id="turnover-kicked" onClick = "turnoverHandler(this.id)">Kicked away by<span class="teamInPossessionReplacer">Team 2</span></button>
+                <button type="button" class="subevent-button" id="turnover-intercept" onClick = "turnoverHandler(this.id)">Interception thrown by <span class="teamInPossessionReplacer">Team 2</span></button>
+            </div>
+
+            <div id="score-event-container">
+                <button type="button" id="score-event">Score</button>
+            </div>
+        </div>
+    </div>
+
+    <div class = "floating-containers" id="match-start-container">
+        <form id="team-info-form">
+            <div class="form-group">
+            <label for="team-one">Team 1 Name</label>
+            <input type="text" id="team-one" name="team-one" value="GWU"> </br>
+            <label for="team-two">Team 2 Name</label>
+            <input type="text" id="team-two" name="team-two" value="Catholic">
+            </div>
+            <div class="form-group">
+            <input type="radio" id="one-kicks" name="kicking" value="one-kicks" checked>
+            <label for="one-kicks">Team 1 Kicks</label> </br>
+            <input type="radio" id="two-kicks" name="kicking" value="two-kicks">
+            <label for="two-kicks">Team 2 Kicks</label>
+        </div>
+        <div  class="form-group">
+            <input type="radio" id="one-starts-left" name="startSide" value="one-starts-left" checked>
+            <label for="one-starts-left">Team 1 Starts Left</label> </br>
+            <input type="radio" id="two-starts-left" name="startSide" value="two-starts-left">
+            <label for="two-starts-left">Team 2 Starts Left</label>
+        </div>
+            <input type="submit" value="Start Game">
+
+        </form>
+    </div>
+
+    <div class = "floating-containers" id="kick-recover-container">
+        <p>Who recovered the kick-off?</p>
+        <button type="button" class="recovery-button" id="team-1-recovered" onClick="kickRecovered(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="recovery-button" id="team-2-recovered" onClick="kickRecovered(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>
+        <button type="button" class="recovery-button" id="neither-recovered" onClick="kickRecovered(this.id)">Neither</button>
+    </div>
+
+    <div class = "floating-containers" id="score-type-container">
+            <button type="button" class="subevent-button" id="try-scored" onClick="scoreHandler(this.id)">Try for <span class="teamInPossessionReplacer">Team 1</span></button>
+            <button type="button" class="subevent-button" id="dropgoal-scored" onClick="scoreHandler(this.id)">Drop Goal for <span class="teamInPossessionReplacer">Team 1</span></button>
+    </div>
+
+    <div class = "floating-containers" id="try-converted-container">
+        <p>Was the conversion successful?</p>
+        <button type="button" id="try-converted" onClick="conversionHandler(this.id)">Yes</button>
+        <button type="button" id="con-missed" onClick="conversionHandler(this.id)">No</button>
+    </div>
+
+    <div class = "floating-containers" id="kick-restart-recover-container">
+        <p>Who recovered the kick?</p>
+        <button type="button" class="recovery-button" id="team-1-restart" onClick="restartHandler(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="recovery-button" id="team-2-restart" onClick="restartHandler(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>
+        <button type="button" class="recovery-button" id="neither-restart">Neither</button>
+    </div>
+
+    <div class = "floating-containers" id="lineout-container">
+        <p>Who won the lineout?</p>
+        <button type="button" class="recovery-button" id="1-wins-lineout" onClick="lineoutHandler(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="recovery-button" id="2-wins-lineout" onClick="lineoutHandler(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>
+        <button type="button" class="recovery-button" id="neither-wins-lineout" onClick="lineoutHandler(this.id)">Neither</button>
+    </div>    
+
+    <div class = "floating-containers" id="scrum-container">
+        <p>Who won the scrum?</p>
+        <button type="button" class="subevent-button" id="1-wins-scrum" onClick="scrumHandler(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="subevent-button" id="2-wins-scrum" onClick="scrumHandler(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>
+        <button type="button" class="subevent-button" id="neither-wins-scrum" onClick="scrumHandler(this.id)">Neither</button>
+    </div>    
+
+    <div class = "floating-containers" id="penalty-choice-container">
+        <p>Penalty option taken</p>
+        <button type="button" class="subevent-button" id="pk-quick-tap" onClick="penaltyChoiceHandler(this.id)">Quick tap</button>
+        <button type="button" class="subevent-button" id="pk-at-goal" onClick="penaltyChoiceHandler(this.id)">Kick for points</button>
+        <button type="button" class="subevent-button" id="pk-to-touch" onClick="penaltyChoiceHandler(this.id)">Kicked to touch</button>
+        <button type="button" class="subevent-button" id="pk-kicked-in" onClick="penaltyChoiceHandler(this.id)">Kicked, still in play</button>
+        <button type="button" class="subevent-button" id="pk-scrum" onClick="penaltyChoiceHandler(this.id)">Scrum option</button>
+    </div>   
+
+    <div class = "floating-containers" id="kick-at-goal-container">
+        <p>Was the kick successful?</p>
+        <button type="button" class="subevent-button" id="pg-successful" onClick="pgHandler(this.id)"><span class="">Yes</span></button>
+        <button type="button" class="subevent-button" id="pg-to-twenty-two" onClick="pgHandler(this.id)"><span class="">No, 22 drop out</span></button>
+        <button type="button" class="subevent-button" id="pg-one-recovers" onClick="pgHandler(this.id)">No, recovered by <span class="teamOneInputReplacer"></span></button>
+        <button type="button" class="subevent-button" id="pg-two-recovers" onClick="pgHandler(this.id)">No, recovered by <span class="teamTwoInputReplacer"></span></button>
+    </div>   
+
+    <div class = "floating-containers" id="mark-choice-container">
+        <p>Mark Options</p>
+        <button type="button" class="subevent-button" id="mark-quick-tap" onClick="markChoiceHandler(this.id)"><span class="">Quick tap</span></button>
+        <button type="button" class="subevent-button" id="mark-to-touch" onClick="markChoiceHandler(this.id)"><span class="">Kicked to touch</span></button>
+        <button type="button" class="subevent-button" id="mark-kicked-in" onClick="markChoiceHandler(this.id)"><span class="">Kicked, still in play</span></button>
+    </div>   
+
+    <div class = "floating-containers" id="ball-outofplay-subevents-container">
+            <button type="button" class="subevent-button" id="in-touch-offense" onClick="outOfPlayHandler(this.id)">Into touch off of <span class="teamInPossessionReplacer">Team 1</span></button>
+            <button type="button" class="subevent-button" id="kicked-touch" onClick="outOfPlayHandler(this.id)">Kicked into touch by <span class="teamInPossessionReplacer">Team 1</span></button>
+            <button type="button" class="subevent-button" id="in-touch-defense" onClick="outOfPlayHandler(this.id)">Into touch off of <span class="teamOnDefenseReplacer">Team 2</span></button>
+            <button type="button" class="subevent-button" id="mark-called" onClick="outOfPlayHandler(this.id)">Kicked, mark called by <span class="teamOnDefenseReplacer">Team 2</span></button>
+            <button type="button" class="subevent-button" id="twenty-two" onClick="outOfPlayHandler(this.id)">22 meter drop-out to<span class="teamOnDefenseReplacer">Team 2</span></button>
+            <button type="button" class="subevent-button" id="scrum-five" onClick="outOfPlayHandler(this.id)">5 meter scrum to <span class="teamInPossessionReplacer">Team 2</span></button>
+    </div>
+
+    <div class = "floating-containers" id="penalty-subevents-container">
+        <button type="button" class="subevent-button" id="pen-ruck-one" onClick="handlePenaltyType(this.id)">Ruck penalty by <span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="subevent-button" id="pen-ruck-two" onClick="handlePenaltyType(this.id)">Ruck penalty by <span class="teamTwoInputReplacer">Team 2</span></button>
+        <button type="button" class="subevent-button" id="pen-offsides-one" onClick="handlePenaltyType(this.id)">Offsides by <span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="subevent-button" id="pen-offsides-two" onClick="handlePenaltyType(this.id)">Offsides by <span class="teamTwoInputReplacer">Team 2</span></button>
+        <button type="button" class="subevent-button" id="pen-dangerous-one" onClick="handlePenaltyType(this.id)">Dangerous play by <span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="subevent-button" id="pen-dangerous-two" onClick="handlePenaltyType(this.id)">Dangerous play by <span class="teamTwoInputReplacer">Team 2</span></button>
+        <button type="button" class="subevent-button" id="pen-other-one" onClick="handlePenaltyType(this.id)">Other penalty by <span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="subevent-button" id="pen-other-two" onClick="handlePenaltyType(this.id)">Other penalty by <span class="teamTwoInputReplacer">Team 2</span></button>
+    </div>  
+
+    <div class = "floating-containers" id="scrum-inf-subevents-container">
+        <button type="button" class="subevent-button" id="knock-on-one">Knocked on by <span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="subevent-button" id="knock-on-two">Knocked on by <span class="teamTwoInputReplacer">Team 1</span></button>
+        <button type="button" class="subevent-button" id="forward-pass">Forward pass by <span class="teamOneInputReplacer">Team 1</span></button>
+        <button type="button" class="subevent-button" id=""> <span class="teamTwoInputReplacer">Team 2</span></button>
+        <button type="button" class="subevent-button" id="">Kicked into touch by <span class="teamTwoInputReplacer">Team 2</span></button>
+    </div>
+    <div id = "clock-controls">
+        <button type = "button" class="clock-item" id="stop-button">Stop Clock</button>
+        <button type="button" class="clock-item" id="restart-button">Restart Clock</button>
+    </div>
+    <table id="possession-table">
+        <tr>
+            <th>Time</th>
+            <th>Team in Possession</th>
+        </tr>
+        <tr>
+            <td>00:00:00</td>
+            <td>None</td>
+        </tr>
+    </table>
+    <br>
+    <table id="score-table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Team</th>
+                <th>Score Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>00:00:00</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="js/main.js"></script>
+</body>
+</html>
