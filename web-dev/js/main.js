@@ -223,6 +223,13 @@ function switchPossessionClock () {
     } else {runPossessionClockOne();}
 }
 
+function stopWatch( ) {clearTimeout(clearTime);
+    stopWatchOne();
+    stopWatchTwo();};
+
+stopButton.addEventListener('click',stopWatch);
+restartButton.addEventListener('click', startWatch);
+
 function startingSides () {
     if ( (game.teamOne.openingKick && game.teamOne.startsLeft && firstHalf) ||
     (game.teamTwo.openingKick && game.teamTwo.startsLeft && !firstHalf) ) {
@@ -372,12 +379,7 @@ function kickRecovered (teamRecovered) {
 
 
 
-function stopWatch( ) {clearTimeout(clearTime);
-    stopWatchOne();
-    stopWatchTwo();};
 
-stopButton.addEventListener('click',stopWatch);
-restartButton.addEventListener('click', startWatch);
 
 
 /* ###########################
@@ -388,8 +390,7 @@ const replaceHalfs = document.querySelectorAll(".half-replacer")
 
 function handleHalftime () {
     endSeries();
-    stopWatchOne();
-    stopWatchTwo();
+    stopPossessionClocks();
     game.series.half = 'Second';
     for (i=0; i < replaceHalfs.length; i++) {replaceHalfs[i].innerHTML = 'Second Half';};
     game.series.seriesCount = 0;
@@ -531,10 +532,10 @@ function PGScoreRow () {
     score3.innerHTML = "Penalty-goal"; 
 }
 
-scoreButton.addEventListener('click', function scoreStuff() {
+scoreButton.addEventListener('click', function () {
     endSeries();
     stopPossessionClocks();
-})
+});
 
 function scoreHandler(scoreType) {
     if (scoreType === 'try-scored' && game.possession === game.teamOne.name){
