@@ -295,11 +295,9 @@ function startGameFunctions () {
 
 function possessionToggle () {
     if (game.possession === game.teamOne.name){
-        switchPossessionClock ()
-        game.possession = game.teamTwo.name
+        game.possession = game.teamTwo.name;
     } else if (game.possession === game.teamTwo.name) {
-        switchPossessionClock ()
-        game.possession = game.teamOne.name
+        game.possession = game.teamOne.name;
     } else {game.possession = 'None'};
     
 }
@@ -549,7 +547,7 @@ function scoreHandler(scoreType) {
         game.teamOne.score.total = game.teamOne.score.total += 3;
         refreshScores () ;
         lastScore = game.teamOne.name;
-        if (game.possession != 'none') {nonePossessionRow();}
+        if (game.possession != 'none') {}
         DGScoreRow ();
 
     } else if (scoreType === 'try-scored' && game.possession === game.teamTwo.name) {
@@ -565,7 +563,7 @@ function scoreHandler(scoreType) {
         refreshScores () ;
         lastScore = game.teamTwo.name;
         
-        if (game.possession != 'none') {nonePossessionRow();}
+        if (game.possession != 'none') {}
         DGScoreRow ();
 
     }
@@ -608,14 +606,14 @@ function restartHandler (getsRestart) {
         game.possession = game.teamOne.name;
         game.action = " attacking from ";
         runPossessionClockOne();
-        newPossessionRow();
+        
         startSeries();
     } else if (getsRestart === 'team-2-restart') {
         possessionDirection.innerHTML = ""
         game.possession = game.teamTwo.name;
         game.action = " defending on ";
         runPossessionClockTwo();
-        newPossessionRow();
+        
         startSeries();
     } else if (getsRestart === 'neither-restart') {
         nonePossessionRow ();
@@ -631,10 +629,13 @@ function restartHandler (getsRestart) {
 const turnoverButton = document.getElementById("turnover-event")
 const turnoverSubevents = document.getElementById("turnover-subevents-container")
 
-function turnoverHandler (turnoverType) {
+turnoverButton.addEventListener('click',function doStuff() {
     switchPossessionClock();
     endSeries();
     startSeries();
+})
+
+function turnoverHandler (turnoverType) {
         if (game.possession === game.teamOne.name && turnoverType === 'turnover-dropped') {
             game.teamOne.handlingErrors = game.teamOne.handlingErrors += 1
             game.teamOne.turnovers = game.teamOne.turnovers += 1
@@ -654,7 +655,6 @@ function turnoverHandler (turnoverType) {
         } else if (game.possession === game.teamTwo.name && turnoverType === 'turnover-intercept') {
             game.teamTwo.turnovers = game.teamTwo.turnovers += 1
         };
-
             possessionToggle ();
             updatePossession();
             updatePlayDescription();
@@ -665,21 +665,27 @@ function turnoverHandler (turnoverType) {
 const outofplayButton = document.getElementById("outofplay-event")
 const outofplaySubevents = document.getElementById("ball-outofplay-subevents-container")
 
+outofplayButton.addEventListener('click', function doStuff() {
+    stopPossessionClocks();
+    endSeries();
+})
+
 var putOutOfPlay = '';
 
 function lineoutHandler (lineoutWinner) {
     if (lineoutWinner === '1-wins-lineout') {
+        runPossessionClockOne();
         game.possession = game.teamOne.name;
         startSeries();
         if (putOutOfPlay === game.teamTwo.name) {
             game.teamOne.lineouts.won = game.teamOne.lineouts.won += 1;
             updatePossession();
-            newPossessionRow();
+            
             updatePlayDescription();
         } else if (putOutOfPlay === game.teamOne.name) {
             game.possession = game.teamOne.name;
             updatePossession();
-            newPossessionRow();
+            
             updatePlayDescription();
             game.lineouts.stolen = game.lineouts.stolen += 1;
             game.teamTwo.lineouts.lost = game.teamTwo.lineouts.lost += 1;
@@ -689,12 +695,10 @@ function lineoutHandler (lineoutWinner) {
         if (putOutOfPlay === game.teamOne.name) {
             game.teamTwo.lineouts.won = game.teamTwo.lineouts.won += 1;
             updatePossession();
-            newPossessionRow();
             updatePlayDescription();
         } else if (putOutOfPlay === game.teamTwo.name) {
             game.possession = game.teamTwo.name;
             updatePossession();
-            newPossessionRow();
             updatePlayDescription();
             game.teamTwo.lineouts.stolen = game.teamTwo.lineouts.stolen += 1;
             game.teamOne.lineouts.lost = game.teamOne.lineouts.lost += 1;
@@ -705,28 +709,25 @@ function lineoutHandler (lineoutWinner) {
 }
 
 function outOfPlayHandler (outOfPlayType) {
-    endSeries();
     if (outOfPlayType === "in-touch-offense" || outOfPlayType === 'kicked-touch') { 
         putOutOfPlay = game.possession;
-        if (game.possession != 'none') {nonePossessionRow();};
+        if (game.possession != 'none') {};
     } else
     if (outOfPlayType === 'in-touch-defense') {
         if (game.possession === game.teamOne.name) {putOutOfPlay = game.teamTwo.name};
         if (game.possession === game.teamTwo.name) {putOutOfPlay = game.teamOne.name};
-        if (game.possession != 'none') {nonePossessionRow();}
+        if (game.possession != 'none') {}
     } else if (outOfPlayType === 'mark-called') {
         possessionToggle() ;
         updatePossession();
-        newPossessionRow() ;
         actionToggle ();
         updatePlayDescription ();
     } else if (outOfPlayType === 'twenty-two') {
         possessionToggle() ;
         updatePossession();
-        newPossessionRow() ;
         updatePlayDescription();
     } else if (outOfPlayType === 'scrum-five') {
-        if (game.possession != 'none') {nonePossessionRow();}
+        if (game.possession != 'none') {}
     }
 }
 
@@ -739,8 +740,14 @@ function markChoiceHandler (markChoice) {
 }
 var lastInfringement = '';
 
-function handlePenaltyType (penaltyType) {
+const penaltyButton = document.getElementById("penalty-event")
+
+penaltyButton.addEventListener('click', function doPenaltyStuff(){
+    stopPossessionClocks();
     endSeries();
+})
+
+function handlePenaltyType (penaltyType) {
     if (penaltyType === 'pen-ruck-one') {
         game.teamOne.penalties.rucks = game.teamOne.penalties.rucks += 1;
         lastInfringement = game.teamOne.name;
@@ -781,42 +788,26 @@ function penaltyChoiceHandler(pkChoice) {
         if (lastInfringement === game.teamOne.name) {
             game.possession = game.teamTwo.name;
             updatePossession ();
-
             updatePlayDescription ();
         } else if (lastInfringement === game.teamTwo.name) {
             game.possession = game.teamOne.name;
             updatePossession ();
-
             updatePlayDescription ();}
-    }
-    else if (pkChoice === 'pk-at-goal') {
-        if (game.possession != 'none') {nonePossessionRow();}
-    }
-    else if (pkChoice === 'pk-to-touch') {
-        if (game.possession != 'none') {nonePossessionRow();}
-    }
-    else if (pkChoice === 'pk-kicked-in') {
-    }
-    else if (pkChoice === 'pk-scrum') {
-        if (game.possession != 'none') {nonePossessionRow();}
     }
 }
 
 function pgHandler (pgResult) {
-    
     if (pgResult === 'pg-successful') {
         if (lastInfringement === game.teamTwo.name) {
             game.teamOne.score.PGs = game.teamOne.score.PGs += 1;
             game.teamOne.score.total = game.teamOne.score.total += 3;
-            refreshScores ();
+            refreshScores();
             PGScoreRow();
-            if (game.possession != 'none') {nonePossessionRow();};
         } else if (game.possession === game.teamOne.name) {
             game.teamTwo.score.PGs = game.teamTwo.score.PGs += 1;
             game.teamTwo.score.total = game.teamTwo.score.total += 3;
-            refreshScores () ;
-            PGScoreRow ();
-            if (game.possession != 'none') {nonePossessionRow();};
+            refreshScores();
+            PGScoreRow();
         }
     } else if (pgResult === 'pg-to-twenty-two') {
         if (lastInfringement === game.teamTwo.name) {
@@ -826,9 +817,10 @@ function pgHandler (pgResult) {
             game.teamTwo.score.PGs.missed = game.teamTwo.score.PGs.missed += 1;
         };
     } else if (pgResult === 'pg-one-recovers') {
+        runPossessionClockOne();
         startSeries();
         game.possession = game.teamOne.name;
-        game.action = 
+        game.action = ' attacking from '
         updatePossession();
         if (lastInfringement === game.teamTwo.name) {
             game.teamOne.score.PGs.missed = game.teamOne.score.PGs.missed += 1;
@@ -837,11 +829,11 @@ function pgHandler (pgResult) {
         }
     }
     else if (pgResult === 'pg-two-recovers') {
+        runPossessionClockTwo();
         startSeries();
         game.possession = game.teamTwo.name;
         game.action = ' defending on '
         updatePossession();
-        newPossessionRow();
         if (lastInfringement === game.teamTwo.name) {
             game.teamOne.score.PGs.missed = game.teamOne.score.PGs.missed += 1;
         } else if (lastInfringement === game.teamOne.name) {
@@ -851,8 +843,12 @@ function pgHandler (pgResult) {
     
 }
 
+scrumInfButton.addEventListener('click', function doScrumStuff(){
+    stopPossessionClocks();
+    endSeries();
+})
+
 function scrumCauseHandler (scrumCause) {
-    if (game.possession != 'none') {nonePossessionRow();} else {endSeries();}
     if (scrumCause === 'scrum-knock-one'){
         lastInfringement = game.teamOne.name;
         game.teamOne.handlingErrors = game.teamOne.handlingErrors += 1;
@@ -919,6 +915,7 @@ function scrumCauseHandler (scrumCause) {
 
 function scrumHandler (scrumWinner) {
     if (scrumWinner === '1-wins-scrum') {
+        runPossessionClockOne();
         startSeries();
         game.possession = game.teamOne.name;
         updatePossession();
@@ -931,6 +928,7 @@ function scrumHandler (scrumWinner) {
             game.teamTwo.scrums.lost = game.teamTwo.scrums.lost += 1;
         }
     } else if (scrumWinner === '2-wins-scrum') {
+        runPossessionClockTwo();
         startSeries();
         game.possession = game.teamTwo.name;
         updatePossession();
@@ -1008,11 +1006,13 @@ function freekickChoiceHandler (fkChoice) {
         startSeries();
         if (lastInfringement === game.teamOne.name) {
             game.possession = game.teamTwo.name;
+            runPossessionClockTwo();
             updatePossession ();
 
             updatePlayDescription ();
         } else if (lastInfringement === game.teamTwo.name) {
             game.possession = game.teamOne.name;
+            runPossessionClockOne();
             updatePossession ();
 
             updatePlayDescription ();}
