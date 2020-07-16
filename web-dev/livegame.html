@@ -87,6 +87,16 @@
             <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="far-right"
                 onClick="tackleHandler(this.id)"></div>
         </div>
+        <div class="row">
+            <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="far-left-h2"
+                onClick="tackleHandler(this.id)"></div>
+            <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="center-left-h2"
+                onClick="tackleHandler(this.id)"></div>
+            <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="center-right-h2"
+                onClick="tackleHandler(this.id)"></div>
+            <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="far-right-h2"
+                onClick="tackleHandler(this.id)"></div>
+        </div>
     </div>
 
     <!-- ########################### -->
@@ -412,12 +422,14 @@
                         <div class="row">
                             <div class="col">
                                 <button type="button" class="btn btn-outline-secondary color-defense btn-block mb-3"
-                                    id="twenty-two" onClick="outOfPlayHandler(this.id)" data-dismiss="modal">22 meter
+                                    id="twenty-two" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal"
+                                    data-target="#kick-recover-container">22 meter
                                     drop-out to<span class="teamOnDefenseReplacer">Team 2</span></button>
                             </div>
                             <div class="col">
                                 <button type="button" class="btn btn-outline-secondary color-possession btn-block mb-3"
-                                    id="scrum-five" onClick="outOfPlayHandler(this.id)" data-dismiss="modal">5 meter
+                                    id="scrum-five" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal"
+                                    data-target="#scrum-container">5 meter
                                     scrum to <span class="teamInPossessionReplacer">Team 2</span></button>
                             </div>
                         </div>

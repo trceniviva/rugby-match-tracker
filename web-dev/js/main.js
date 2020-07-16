@@ -164,9 +164,6 @@ function startWatch() {
 }
 
 function startTime() {
-    tenthseconds = 0;
-    seconds = 0;
-    minutes = 0;
     if (matchClockStatus != "Running") {
     startWatch();};
 }
@@ -431,7 +428,11 @@ function tackleHandler(tackleArea) {
             game.tackles.q1 += 1;
             game.tackles.time.push(mins + secs + tnthsecs);
             game.tackles.quadrant.push(1);
-            document.getElementById("far-left").innerHTML = game.tackles.q1;
+            document.getElementById("far-left").innerHTML = Math.trunc((game.tackles.q1 / game.tackles.count).toFixed(2)*100) + "%";
+            document.getElementById("center-left").innerHTML = Math.trunc((game.tackles.q2 / game.tackles.count).toFixed(2)*100) + "%";
+            document.getElementById("center-right").innerHTML = Math.trunc((game.tackles.q3 / game.tackles.count).toFixed(2)*100) + "%";
+            document.getElementById("far-right").innerHTML = Math.trunc((game.tackles.q4 / game.tackles.count).toFixed(2)*100) + "%";
+
         } else
             if (tackleArea === 'center-left') {
                 game.tackles.half.push('First Half');
@@ -439,7 +440,10 @@ function tackleHandler(tackleArea) {
                 game.tackles.q2 += 1;
                 game.tackles.time.push(mins + secs + tnthsecs);
                 game.tackles.quadrant.push(2);
-                document.getElementById("center-left").innerHTML = game.tackles.q2;
+                document.getElementById("far-left").innerHTML = Math.trunc((game.tackles.q1 / game.tackles.count).toFixed(2)*100) + "%";
+                document.getElementById("center-left").innerHTML = Math.trunc((game.tackles.q2 / game.tackles.count).toFixed(2)*100) + "%";
+                document.getElementById("center-right").innerHTML = Math.trunc((game.tackles.q3 / game.tackles.count).toFixed(2)*100) + "%";
+                document.getElementById("far-right").innerHTML = Math.trunc((game.tackles.q4 / game.tackles.count).toFixed(2)*100) + "%";
             } else
                 if (tackleArea === 'center-right') {
                     game.tackles.half.push('First Half');
@@ -447,7 +451,10 @@ function tackleHandler(tackleArea) {
                     game.tackles.q3 += 1;
                     game.tackles.time.push(mins + secs + tnthsecs);
                     game.tackles.quadrant.push(3);
-                    document.getElementById("center-right").innerHTML = game.tackles.q3;
+                    document.getElementById("far-left").innerHTML = Math.trunc((game.tackles.q1 / game.tackles.count).toFixed(2)*100) + "%";
+                    document.getElementById("center-left").innerHTML = Math.trunc((game.tackles.q2 / game.tackles.count).toFixed(2)*100) + "%";
+                    document.getElementById("center-right").innerHTML = Math.trunc((game.tackles.q3 / game.tackles.count).toFixed(2)*100) + "%";
+                    document.getElementById("far-right").innerHTML = Math.trunc((game.tackles.q4 / game.tackles.count).toFixed(2)*100) + "%";
                 } else
                     if (tackleArea === 'far-right') {
                         game.tackles.half.push('First Half');
@@ -455,7 +462,10 @@ function tackleHandler(tackleArea) {
                         game.tackles.q4 += 1;
                         game.tackles.time.push(mins + secs + tnthsecs);
                         game.tackles.quadrant.push(4);
-                        document.getElementById("far-right").innerHTML = game.tackles.q4;
+                        document.getElementById("far-left").innerHTML = Math.trunc((game.tackles.q1 / game.tackles.count).toFixed(2)*100) + "%";
+                        document.getElementById("center-left").innerHTML = Math.trunc((game.tackles.q2 / game.tackles.count).toFixed(2)*100) + "%";
+                        document.getElementById("center-right").innerHTML = Math.trunc((game.tackles.q3 / game.tackles.count).toFixed(2)*100) + "%";
+                        document.getElementById("far-right").innerHTML = Math.trunc((game.tackles.q4 / game.tackles.count).toFixed(2)*100) + "%";
                     }
     }
     else if (firstHalf === false) {
@@ -465,7 +475,10 @@ function tackleHandler(tackleArea) {
             game.tackles.q4 += 1;
             game.tackles.time.push(mins + secs + tnthsecs);
             game.tackles.quadrant.push(4);
-            document.getElementById("far-left").innerHTML = game.tackles.q4;
+            document.getElementById("far-left-h2").innerHTML = Math.trunc((game.tackles.q4 / game.tackles.count).toFixed(2)*100) + "%";
+            document.getElementById("center-left-h2").innerHTML = Math.trunc((game.tackles.q3 / game.tackles.count).toFixed(2)*100) + "%";
+            document.getElementById("center-right-h2").innerHTML = ((game.tackles.q2 / game.tackles.count).toFixed(2)*100) + "%";
+            document.getElementById("far-right-h2").innerHTML = Math.trunc((game.tackles.q1 / game.tackles.count).toFixed(2)*100) + "%";
         } else
             if (tackleArea === 'center-left') {
                 game.tackles.half.push('Second Half');
@@ -473,7 +486,10 @@ function tackleHandler(tackleArea) {
                 game.tackles.q3 += 1;
                 game.tackles.time.push(mins + secs + tnthsecs);
                 game.tackles.quadrant.push(3);
-                document.getElementById("center-left").innerHTML = game.tackles.q3;
+                document.getElementById("far-left-h2").innerHTML = Math.trunc((game.tackles.q4 / game.tackles.count).toFixed(2)*100) + "%";
+                document.getElementById("center-left-h2").innerHTML = Math.trunc((game.tackles.q3 / game.tackles.count).toFixed(2)*100) + "%";
+                document.getElementById("center-right-h2").innerHTML = ((game.tackles.q2 / game.tackles.count).toFixed(2)*100) + "%";
+                document.getElementById("far-right-h2").innerHTML = Math.trunc((game.tackles.q1 / game.tackles.count).toFixed(2)*100) + "%";
             } else
                 if (tackleArea === 'center-right') {
                     game.tackles.half.push('Second Half');
@@ -481,7 +497,10 @@ function tackleHandler(tackleArea) {
                     game.tackles.q2 += 1;
                     game.tackles.time.push(mins + secs + tnthsecs);
                     game.tackles.quadrant.push(2);
-                    document.getElementById("center-right").innerHTML = game.tackles.q2;
+                    document.getElementById("far-left-h2").innerHTML = Math.trunc((game.tackles.q4 / game.tackles.count).toFixed(2)*100) + "%";
+                    document.getElementById("center-left-h2").innerHTML = Math.trunc((game.tackles.q3 / game.tackles.count).toFixed(2)*100) + "%";
+                    document.getElementById("center-right-h2").innerHTML = ((game.tackles.q2 / game.tackles.count).toFixed(2)*100) + "%";
+                    document.getElementById("far-right-h2").innerHTML = Math.trunc((game.tackles.q1 / game.tackles.count).toFixed(2)*100) + "%";
                 } else
                     if (tackleArea === 'far-right') {
                         game.tackles.half.push('Second Half');
@@ -489,7 +508,10 @@ function tackleHandler(tackleArea) {
                         game.tackles.q1 += 1;
                         actionAreas.tackleTime.push(mins + secs + tnthsecs);
                         actionAreas.tackleArea.push(1);
-                        document.getElementById("far-right").innerHTML = game.tackles.q1;
+                        document.getElementById("far-left-h2").innerHTML = Math.trunc((game.tackles.q4 / game.tackles.count).toFixed(2)*100) + "%";
+                        document.getElementById("center-left-h2").innerHTML = Math.trunc((game.tackles.q3 / game.tackles.count).toFixed(2)*100) + "%";
+                        document.getElementById("center-right-h2").innerHTML = ((game.tackles.q2 / game.tackles.count).toFixed(2)*100) + "%";
+                        document.getElementById("far-right-h2").innerHTML = Math.trunc((game.tackles.q1 / game.tackles.count).toFixed(2)*100) + "%";
                     }
     }
 }
@@ -696,10 +718,10 @@ var putOutOfPlay = '';
 
 function lineoutHandler(lineoutWinner) {
     if (lineoutWinner === '1-wins-lineout') {
+        game.possession = game.teamOne.name;
         updatePossession();
         updatePlayDescription();
         runPossessionClockOne();
-        game.possession = game.teamOne.name;
         startSeries();
         if (putOutOfPlay === game.teamTwo.name) {
             game.teamOne.lineouts.won = game.teamOne.lineouts.won += 1;
@@ -709,16 +731,16 @@ function lineoutHandler(lineoutWinner) {
             game.teamTwo.lineouts.lost = game.teamTwo.lineouts.lost += 1;
         }
     } else if (lineoutWinner === '2-wins-lineout') {
-        game.possession = game.
+        game.possession = game.teamTwo.name;
+            startSeries();
+            updatePossession();
+            updatePlayDescription();
+            runPossessionClockTwo();
             startSeries();
         if (putOutOfPlay === game.teamOne.name) {
             game.teamTwo.lineouts.won = game.teamTwo.lineouts.won += 1;
-            updatePossession();
-            updatePlayDescription();
         } else if (putOutOfPlay === game.teamTwo.name) {
             game.possession = game.teamTwo.name;
-            updatePossession();
-            updatePlayDescription();
             game.teamTwo.lineouts.stolen = game.teamTwo.lineouts.stolen += 1;
             game.teamOne.lineouts.lost = game.teamOne.lineouts.lost += 1;
 
@@ -752,12 +774,10 @@ function outOfPlayHandler(outOfPlayType) {
 
 function markChoiceHandler(markChoice) {
     if (markChoice === 'mark-quick-tap') {
-        possessionToggle();
         updatePossession();
         switchPossessionClock();
     } else if (markChoice === 'mark-to-touch') {
         putOutOfPlay = game.possession;
-        possessionToggle();
         updatePossession();
         updatePlayDescription();
     } else if (markChoice === 'mark-kicked-in') {
