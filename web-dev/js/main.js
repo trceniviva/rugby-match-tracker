@@ -6,6 +6,7 @@ const game = {
     action: '',
     series: {
         half: 'First',
+        team: [],
         seriesHalf: [],
         seriesStartTime:[],
         seriesEndTime: [],
@@ -13,7 +14,7 @@ const game = {
         phaseCount: [],
         currSeries: 0,
         currPhases: 0},
-    tackles: {count: 0,time: [],quadrant: [],q1: 0,q2: 0,q3: 0,q4: 0},
+    tackles: {half: [], count: 0, time: [],quadrant: [],q1: 0,q2: 0,q3: 0,q4: 0},
     teamOne: {
         name: 'Team 1',
         color: '173, 158, 110',
@@ -212,6 +213,8 @@ function runPossessionClockTwo (  ) {
 
 function stopWatchTwo( ) {clearTimeout(clearTimeTwo)};
 
+function stopMainWatch() {clearTimeout(clearTime)};
+
 function stopPossessionClocks () {
     stopWatchOne();
     stopWatchTwo();
@@ -223,12 +226,21 @@ function switchPossessionClock () {
     } else {runPossessionClockOne();}
 }
 
-function stopWatch( ) {clearTimeout(clearTime);
+function stopWatch( ) {
+    stopMainWatch();
     stopWatchOne();
-    stopWatchTwo();};
+    stopWatchTwo();
+}
+
+function restartWatch( ) {
+    startWatch();
+    if (game.possession === game.teamOne.name) {
+    runPossessionClockOne();} else if (game.possession === game.teamTwo.name) {
+    runPossessionClockTwo();}
+}
 
 stopButton.addEventListener('click',stopWatch);
-restartButton.addEventListener('click', startWatch);
+restartButton.addEventListener('click', restartWatch);
 
 function startingSides () {
     if ( (game.teamOne.openingKick && game.teamOne.startsLeft && firstHalf) ||
@@ -314,11 +326,12 @@ function actionToggle () {
 		game.action = ' attacking from '
 	} else if (game.action === ' attacking from ') {
 		game.action = ' defending on '
-	} else (game.action = ' on ')
+	} else {game.action = ' on '}
 }
 
 function startSeries () {
     game.series.seriesHalf.push(game.series.half);
+    game.series.team.push(game.possession)
     game.series.seriesStartTime.push(matchTime);
     game.series.currSeries = game.series.currSeries += 1;
     game.series.currPhases = 1;
@@ -333,7 +346,6 @@ function newPhase () {
 }
 
 function endSeries () {
-    game.series.seriesHalf.push(game.series.half);
     game.series.seriesEndTime.push(matchTime);
     game.series.seriesCount.push(game.series.currSeries);
     game.series.phaseCount.push(game.series.currPhases);
@@ -357,7 +369,6 @@ function updatePlayDescription () {
     }; }
 
 function kickRecovered (teamRecovered) {
-    recoverBox.style.display="none";
     if (teamRecovered === 'team-1-recovered') {
         possessionDirection.innerHTML = "";
         game.possession = game.teamOne.name;
@@ -374,13 +385,7 @@ function kickRecovered (teamRecovered) {
         };
         updatePossession();
         updatePlayDescription();
-       
 }
-
-
-
-
-
 
 /* ###########################
 ### Halftime Functionality ###
@@ -412,6 +417,7 @@ function tackleHandler (tackleArea) {
     newPhase();
     if (firstHalf === true) {
         if (tackleArea === 'far-left') {
+            game.tackles.half.push('First Half');
             game.tackles.count += 1;
             game.tackles.q1 += 1;
             game.tackles.time.push(mins + secs + tnthsecs);
@@ -419,6 +425,7 @@ function tackleHandler (tackleArea) {
             document.getElementById("far-left").innerHTML = game.tackles.q1;
         } else
         if (tackleArea === 'center-left') {
+            game.tackles.half.push('First Half');
             game.tackles.count += 1;
             game.tackles.q2 += 1;
             game.tackles.time.push(mins + secs + tnthsecs);
@@ -426,6 +433,7 @@ function tackleHandler (tackleArea) {
             document.getElementById("center-left").innerHTML = game.tackles.q2;
         } else
         if (tackleArea === 'center-right') {
+            game.tackles.half.push('First Half');
             game.tackles.count += 1;
             game.tackles.q3 += 1;
             game.tackles.time.push(mins + secs + tnthsecs);
@@ -433,6 +441,7 @@ function tackleHandler (tackleArea) {
             document.getElementById("center-right").innerHTML = game.tackles.q3;
         } else
         if (tackleArea === 'far-right') {
+            game.tackles.half.push('First Half');
             game.tackles.count += 1;
             game.tackles.q4 += 1;
             game.tackles.time.push(mins + secs + tnthsecs);
@@ -442,6 +451,7 @@ function tackleHandler (tackleArea) {
         } 
     else if (firstHalf === false) {
         if (tackleArea === 'far-left') {
+            game.tackles.half.push('Second Half');
             game.tackles.count += 1;
             game.tackles.q4 += 1;
             game.tackles.time.push(mins + secs + tnthsecs);
@@ -449,6 +459,7 @@ function tackleHandler (tackleArea) {
             document.getElementById("far-left").innerHTML = game.tackles.q4;
         } else
         if (tackleArea === 'center-left') {
+            game.tackles.half.push('Second Half');
             game.tackles.count += 1;
             game.tackles.q3 += 1;
             game.tackles.time.push(mins + secs + tnthsecs);
@@ -456,6 +467,7 @@ function tackleHandler (tackleArea) {
             document.getElementById("center-left").innerHTML = game.tackles.q3;
         } else
         if (tackleArea === 'center-right') {
+            game.tackles.half.push('Second Half');
             game.tackles.count += 1;
             game.tackles.q2 += 1;
             game.tackles.time.push(mins + secs + tnthsecs);
@@ -463,6 +475,7 @@ function tackleHandler (tackleArea) {
             document.getElementById("center-right").innerHTML = game.tackles.q2;
         } else
         if (tackleArea === 'far-right') {
+            game.tackles.half.push('Second Half');
             game.tackles.count += 1;
             game.tackles.q1 += 1;
             actionAreas.tackleTime.push(mins + secs + tnthsecs);
@@ -482,9 +495,9 @@ const team1ScoreBox = document.getElementById("team-1-score")
 const team2ScoreBox = document.getElementById("team-2-score")
 const conContainer = document.getElementById("try-converted-container")
 const restartRecover = document.getElementById("kick-restart-recover-container")
-var teamOneRestart = document.getElementById("team-1-restart")
-var teamTwoRestart = document.getElementById("team-2-restart")
-var neitherRestart = document.getElementById("neither-restart")
+const teamOneRestart = document.getElementById("team-1-restart")
+const teamTwoRestart = document.getElementById("team-2-restart")
+const neitherRestart = document.getElementById("neither-restart")
 var lastScore = 'none';
 
 function refreshScores () {
@@ -543,7 +556,6 @@ function scoreHandler(scoreType) {
         game.teamOne.score.total = game.teamOne.score.total += 5;
         refreshScores ();
         lastScore = game.teamOne.name;
-
         tryScoreRow ();  
 
     } else if (scoreType === 'dropgoal-scored' && game.possession === game.teamOne.name) {
@@ -551,7 +563,6 @@ function scoreHandler(scoreType) {
         game.teamOne.score.total = game.teamOne.score.total += 3;
         refreshScores () ;
         lastScore = game.teamOne.name;
-        if (game.possession != 'none') {}
         DGScoreRow ();
 
     } else if (scoreType === 'try-scored' && game.possession === game.teamTwo.name) {
@@ -566,8 +577,6 @@ function scoreHandler(scoreType) {
         game.teamTwo.score.total = game.teamTwo.score.total += 3;
         refreshScores () ;
         lastScore = game.teamTwo.name;
-        
-        if (game.possession != 'none') {}
         DGScoreRow ();
 
     }
@@ -575,7 +584,6 @@ function scoreHandler(scoreType) {
         scoreTypeContainer.style.display="none";
     };
     updatePlayDescription();
-    updatePossession();
 }
 
 function conversionHandler (conversionSuccessful) {
@@ -610,20 +618,21 @@ function restartHandler (getsRestart) {
         game.possession = game.teamOne.name;
         game.action = " attacking from ";
         runPossessionClockOne();
-        
         startSeries();
+        updatePossession();
+        updatePlayDescription();
     } else if (getsRestart === 'team-2-restart') {
         possessionDirection.innerHTML = ""
         game.possession = game.teamTwo.name;
         game.action = " defending on ";
         runPossessionClockTwo();
-        
         startSeries();
+        updatePossession();
+        updatePlayDescription();
     } else if (getsRestart === 'neither-restart') {
         nonePossessionRow ();
     };
-    updatePossession();
-    updatePlayDescription();
+    
 }
 
 /* ##############################
@@ -636,30 +645,30 @@ const turnoverSubevents = document.getElementById("turnover-subevents-container"
 turnoverButton.addEventListener('click',function doStuff() {
     switchPossessionClock();
     endSeries();
-    startSeries();
 })
 
 function turnoverHandler (turnoverType) {
-        if (game.possession === game.teamOne.name && turnoverType === 'turnover-dropped') {
+    possessionToggle();
+        if (game.possession === game.teamTwo.name && turnoverType === 'turnover-dropped') {
             game.teamOne.handlingErrors = game.teamOne.handlingErrors += 1
             game.teamOne.turnovers = game.teamOne.turnovers += 1
-        } else if (game.possession === game.teamOne.name && turnoverType === 'turnover-breakdown') {
+        } else if (game.possession === game.teamTwo.name && turnoverType === 'turnover-breakdown') {
             game.teamOne.lostBreakdowns = game.teamOne.lostBreakdowns += 1
             game.teamOne.turnovers = game.teamOne.turnovers += 1
-        } else if (game.possession === game.teamOne.name && turnoverType === 'turnover-intercept') {
+        } else if (game.possession === game.teamTwo.name && turnoverType === 'turnover-intercept') {
             game.teamOne.turnovers = game.teamOne.turnovers += 1
         } 
         
-        else if (game.possession === game.teamTwo.name && turnoverType === 'turnover-dropped') {
+        else if (game.possession === game.teamOne.name && turnoverType === 'turnover-dropped') {
             game.teamTwo.handlingErrors = game.teamTwo.handlingErrors += 1
             game.teamTwo.turnovers = game.teamTwo.turnovers += 1
-        } else if (game.possession === game.teamTwo.name && turnoverType === 'turnover-breakdown') {
+        } else if (game.possession === game.teamOne.name && turnoverType === 'turnover-breakdown') {
             game.teamTwo.lostBreakdowns = game.teamTwo.lostBreakdowns += 1
             game.teamTwo.turnovers = game.teamTwo.turnovers += 1
-        } else if (game.possession === game.teamTwo.name && turnoverType === 'turnover-intercept') {
+        } else if (game.possession === game.teamOne.name && turnoverType === 'turnover-intercept') {
             game.teamTwo.turnovers = game.teamTwo.turnovers += 1
         };
-            possessionToggle ();
+            startSeries();
             updatePossession();
             updatePlayDescription();
     } 
@@ -691,6 +700,7 @@ function lineoutHandler (lineoutWinner) {
             game.teamTwo.lineouts.lost = game.teamTwo.lineouts.lost += 1;
         } 
     } else if (lineoutWinner === '2-wins-lineout') {
+        game.possession = game.
         startSeries();
         if (putOutOfPlay === game.teamOne.name) {
             game.teamTwo.lineouts.won = game.teamTwo.lineouts.won += 1;

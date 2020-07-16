@@ -37,33 +37,33 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col text-center font-weight-bold">
-                <p class="text-buff h4">Live Game</p>
+                <p class="h4 text-dark">Live Game</p>
             </div>
             <div class="col text-center font-weight-bold">
-                <p id="current-half" class="text-buff h4">First Half</p>
+                <p id="current-half" class="h4 text-dark">First Half</p>
             </div>
         </div>
     </div>
     <!-- ################## -->
     <!-- Scoreboard & Clock -->
     <!-- ################## -->
-    <div class="container">
-        <div class="row text-center">
-            <div class="col ml-5 mr-5">
-                <p class="box-team-name teamOneInputReplacer h5 border color-team1" id="team-1-name">Team 1</p>
+    <div class="container bg-dark">
+        <div class="row text-center pt-3">
+            <div class="col">
+                <p class="box-team-name teamOneInputReplacer border rounded color-team1" id="team-1-name">Team 1</p>
                 <div>
-                    <p class="box-score h2 border" id="team-1-score">0</p>
+                    <p class="box-score h4 border rounded text-white" id="team-1-score">0</p>
                 </div>
             </div>
             <div class="col">
-                <p class="box-team-name teamTwoInputReplacer h5 border color-team2" id="team-2-name" >Team 2</p>
+                <p class="box-team-name teamTwoInputReplacer border rounded color-team2" id="team-2-name" >Team 2</p>
                 <div>
-                    <p class="box-score h2 border" id="team-2-score">0</p>
+                    <p class="box-score h4 border rounded text-white" id="team-2-score">0</p>
                 </div>
             </div>
             <div class="col">
-                <p class="box-team-name h5">Game Clock</p>
-                <p class="box-score h2" id="game-clock">00:00:00</p>
+                <p class="box-team-name border rounded text-white">Game Clock</p>
+                <p class="box-score h5 border rounded text-white" id="game-clock">00:00:00</p>
             </div>
         </div>
     </div>
@@ -180,7 +180,7 @@
                             </div>
                             <div class="w-25 ml-3">
                                 <label for="team-one-color" class="text-nowrap">Team 1 Color</label>
-                                <input class="form-control" type="color" id="team-one-color" name="team-one-color" value="#ad9e6e">
+                                <input class="form-control w-100" type="color" id="team-one-color" name="team-one-color" value="#ad9e6e">
                             </div>
                         </div>
                         <div class="form-inline">
@@ -190,7 +190,7 @@
                             </div>
                             <div class="w-25 ml-3">
                                 <label for="team-two-color" class="text-nowrap">Team 2 Color</label>
-                                <input class="form-control" type="color" id="team-two-color" name="team-two-color" value="#10395c">
+                                <input class="form-control w-100" type="color" id="team-two-color" name="team-two-color" value="#10395c">
                             </div>
                         </div>
                         <br>
@@ -218,7 +218,6 @@
                         </div>
                     </form>
                 </div>
-            
         </div>
         </div>
     </div>
@@ -228,23 +227,25 @@
     <!-- ################## -->
 
     <div class="modal fade" id="kick-recover-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Who recovered the kick-off?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="false">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <button type="button" class="btn color-team1" id="team-1-recovered" onClick="kickRecovered(this.id)" data-dismiss="modal"><span class="teamOneInputReplacer">Team 1</span></button>
-                        <button type="button" class="btn color-team2" id="team-2-recovered" onClick="kickRecovered(this.id)" data-dismiss="modal"><span class="teamTwoInputReplacer">Team 2</span></button>
-                        <button type="button" class="btn btn-outline-secondary" id="neither-recovered" onClick="kickRecovered(this.id)" data-dismiss="modal">Neither</button>
-                    </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Who recovered the kick-off?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn color-team1" id="team-1-recovered" onClick="kickRecovered(this.id); startWatch();" data-dismiss="modal"><span class="teamOneInputReplacer">Team 1</span></button>
+                    <button type="button" class="btn color-team2" id="team-2-recovered" onClick="kickRecovered(this.id); startWatch();" data-dismiss="modal"><span class="teamTwoInputReplacer">Team 2</span></button>
+                    <button type="button" class="btn btn-outline-secondary" id="neither-recovered" onClick="kickRecovered(this.id); startWatch();" data-dismiss="modal">Neither</button>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
-        </div>
+        </div>  
     </div>
 
     <!-- ####################################################### -->
@@ -256,35 +257,37 @@
     <!-- ################### -->
 
     <div class="modal fade" id="turnover-subevents-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Turnover Type</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="false">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-block color-possession mb-3" id="turnover-dropped" onClick = "turnoverHandler(this.id)" data-dismiss="modal">Dropped in open play by<span class="teamInPossessionReplacer">Team 1</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-block color-possession mb-3" id="turnover-breakdown" onClick = "turnoverHandler(this.id)" data-dismiss="modal">Lost in tackle, ruck, or maul by <span class="teamInPossessionReplacer">Team 1</span></button>
-                                </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Turnover Type</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-block color-possession mb-3" id="turnover-dropped" onClick = "turnoverHandler(this.id);restartWatch()" data-dismiss="modal">Dropped in open play by<span class="teamInPossessionReplacer">Team 1</span></button>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-block color-possession mb-3" id="turnover-kicked" onClick = "turnoverHandler(this.id)" data-dismiss="modal">Kicked away by<span class="teamInPossessionReplacer">Team 2</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-block color-possession mb-3" id="turnover-intercept" onClick = "turnoverHandler(this.id)" data-dismiss="modal">Interception thrown by <span class="teamInPossessionReplacer">Team 2</span></button>
-                                </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-block color-possession mb-3" id="turnover-breakdown" onClick = "turnoverHandler(this.id);restartWatch()" data-dismiss="modal">Lost in tackle, ruck, or maul by <span class="teamInPossessionReplacer">Team 1</span></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-block color-possession mb-3" id="turnover-kicked" onClick = "turnoverHandler(this.id);restartWatch()" data-dismiss="modal">Kicked away by<span class="teamInPossessionReplacer">Team 2</span></button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-block color-possession mb-3" id="turnover-intercept" onClick = "turnoverHandler(this.id);restartWatch()" data-dismiss="modal">Interception thrown by <span class="teamInPossessionReplacer">Team 2</span></button>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
@@ -295,44 +298,46 @@
     <!-- ####################### -->
 
     <div class="modal fade" id="ball-outofplay-subevents-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Out of Play Cause</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="false">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn color-possession btn-block mb-3" id="in-touch-offense" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#lineout-container">Into touch off of <span class="teamInPossessionReplacer">Team 1</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn color-possession btn-block mb-3" id="kicked-touch" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#lineout-container">Kicked into touch by <span class="teamInPossessionReplacer">Team 1</span></button>
-                                </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Out of Play Cause</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn color-possession btn-block mb-3" id="in-touch-offense" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#lineout-container">Into touch off of <span class="teamInPossessionReplacer">Team 1</span></button>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn color-defense btn-block mb-3" id="in-touch-defense" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#lineout-container">Into touch off of <span class="teamOnDefenseReplacer">Team 2</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn color-defense btn-block mb-3" id="mark-called" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#freekick-choice-container">Kicked, mark called by <span class="teamOnDefenseReplacer">Team 2</span></button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary color-defense btn-block mb-3" id="twenty-two" onClick="outOfPlayHandler(this.id)" data-dismiss="modal">22 meter drop-out to<span class="teamOnDefenseReplacer">Team 2</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary color-possession btn-block mb-3" id="scrum-five" onClick="outOfPlayHandler(this.id)" data-dismiss="modal">5 meter scrum to <span class="teamInPossessionReplacer">Team 2</span></button>
-                                </div>
+                            <div class="col">
+                                <button type="button" class="btn color-possession btn-block mb-3" id="kicked-touch" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#lineout-container">Kicked into touch by <span class="teamInPossessionReplacer">Team 1</span></button>
                             </div>
                         </div>
-                    </div>  
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn color-defense btn-block mb-3" id="in-touch-defense" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#lineout-container">Into touch off of <span class="teamOnDefenseReplacer">Team 2</span></button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn color-defense btn-block mb-3" id="mark-called" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal" data-target="#freekick-choice-container">Kicked, mark called by <span class="teamOnDefenseReplacer">Team 2</span></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary color-defense btn-block mb-3" id="twenty-two" onClick="outOfPlayHandler(this.id)" data-dismiss="modal">22 meter drop-out to<span class="teamOnDefenseReplacer">Team 2</span></button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary color-possession btn-block mb-3" id="scrum-five" onClick="outOfPlayHandler(this.id)" data-dismiss="modal">5 meter scrum to <span class="teamInPossessionReplacer">Team 2</span></button>
+                            </div>
+                        </div>
+                    </div>
                 </div>  
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
+                </div>
             </div>  
         </div>  
     </div>
@@ -342,51 +347,53 @@
     <!-- ################### -->
 
     <div class="modal fade" id="penalty-subevents-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Penalty Type</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="false">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-ruck-one" onClick="handlePenaltyType(this.id)">Ruck penalty against <span class="teamOneInputReplacer">Team 1</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-ruck-two" onClick="handlePenaltyType(this.id)">Ruck penalty against <span class="teamTwoInputReplacer">Team 2</span></button>
-                                </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Penalty Type</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-ruck-one" onClick="handlePenaltyType(this.id)">Ruck penalty against <span class="teamOneInputReplacer">Team 1</span></button>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-offsides-one" onClick="handlePenaltyType(this.id)">Offsides against <span class="teamOneInputReplacer">Team 1</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-offsides-two" onClick="handlePenaltyType(this.id)">Offsides against <span class="teamTwoInputReplacer">Team 2</span></button>
-                                </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-ruck-two" onClick="handlePenaltyType(this.id)">Ruck penalty against <span class="teamTwoInputReplacer">Team 2</span></button>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-dangerous-one" onClick="handlePenaltyType(this.id)">Dangerous play against <span class="teamOneInputReplacer">Team 1</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-dangerous-two" onClick="handlePenaltyType(this.id)">Dangerous play against <span class="teamTwoInputReplacer">Team 2</span></button>
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-offsides-one" onClick="handlePenaltyType(this.id)">Offsides against <span class="teamOneInputReplacer">Team 1</span></button>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-other-one" onClick="handlePenaltyType(this.id)">Other penalty against <span class="teamOneInputReplacer">Team 1</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-other-two" onClick="handlePenaltyType(this.id)">Other penalty against <span class="teamTwoInputReplacer">Team 2</span></button>
-                                </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-offsides-two" onClick="handlePenaltyType(this.id)">Offsides against <span class="teamTwoInputReplacer">Team 2</span></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-dangerous-one" onClick="handlePenaltyType(this.id)">Dangerous play against <span class="teamOneInputReplacer">Team 1</span></button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-dangerous-two" onClick="handlePenaltyType(this.id)">Dangerous play against <span class="teamTwoInputReplacer">Team 2</span></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-other-one" onClick="handlePenaltyType(this.id)">Other penalty against <span class="teamOneInputReplacer">Team 1</span></button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#penalty-choice-container" id="pen-other-two" onClick="handlePenaltyType(this.id)">Other penalty against <span class="teamTwoInputReplacer">Team 2</span></button>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
@@ -397,56 +404,58 @@
     <!-- ################# -->
 
     <div class="modal fade" id="scrum-inf-subevents-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Scrum Cause</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="false">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-knock-one" onClick="scrumCauseHandler(this.id)">Knocked on by <span class="teamOneInputReplacer">Team 1</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-knock-two" onClick="scrumCauseHandler(this.id)">Knocked on by <span class="teamTwoInputReplacer">Team 2</span></button>
-                                </div>
-                            </div> 
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-possession" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-forward-pass" onClick="scrumCauseHandler(this.id)">Forward pass by <span class="teamInPossessionReplacer">Team 1</span></button>
-                                </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Scrum Cause</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-knock-one" onClick="scrumCauseHandler(this.id)">Knocked on by <span class="teamOneInputReplacer">Team 1</span></button>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-offsides-one" onClick="scrumCauseHandler(this.id)">Offsides / obstruction by <span class="teamOneInputReplacer">Team 1</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-offsides-two" onClick="scrumCauseHandler(this.id)">Offsides / obstruction by <span class="teamTwoInputReplacer">Team 2</span></button>
-                                </div>
-                            </div> 
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-possession" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-unplayable-attack" onClick="scrumCauseHandler(this.id)">Unplayable tackle or ruck (attacking feed)</button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-defenseata-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-unplayable-defense" onClick="scrumCauseHandler(this.id)">Unplayable maul (defending feed)</button>
-                                </div>
-                            </div> 
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-other-one" onClick="scrumCauseHandler(this.id)">Other against <span class="teamOneInputReplacer">Team 1</span>, scrum to <span class="teamTwoInputReplacer">Team 2</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-other-two" onClick="scrumCauseHandler(this.id)">Other against <span class="teamTwoInputReplacer">Team 2</span>, scrum to <span class="teamOneInputReplacer">Team 1</span></button>
-                                </div>
-                            </div> 
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-knock-two" onClick="scrumCauseHandler(this.id)">Knocked on by <span class="teamTwoInputReplacer">Team 2</span></button>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-possession" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-forward-pass" onClick="scrumCauseHandler(this.id)">Forward pass by <span class="teamInPossessionReplacer">Team 1</span></button>
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-offsides-one" onClick="scrumCauseHandler(this.id)">Offsides / obstruction by <span class="teamOneInputReplacer">Team 1</span></button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-offsides-two" onClick="scrumCauseHandler(this.id)">Offsides / obstruction by <span class="teamTwoInputReplacer">Team 2</span></button>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-possession" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-unplayable-attack" onClick="scrumCauseHandler(this.id)">Unplayable tackle or ruck (attacking feed)</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-defenseata-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-unplayable-defense" onClick="scrumCauseHandler(this.id)">Unplayable maul (defending feed)</button>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team1" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-other-one" onClick="scrumCauseHandler(this.id)">Other against <span class="teamOneInputReplacer">Team 1</span>, scrum to <span class="teamTwoInputReplacer">Team 2</span></button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-team2" data-dismiss="modal" data-toggle="modal" data-target="#scrum-container" id="scrum-other-two" onClick="scrumCauseHandler(this.id)">Other against <span class="teamTwoInputReplacer">Team 2</span>, scrum to <span class="teamOneInputReplacer">Team 1</span></button>
+                            </div>
+                        </div> 
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
@@ -459,19 +468,21 @@
     <!-- ################ -->
 
     <div class="modal fade" id="score-type-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Type of score for team in possession:</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="false">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-possession" data-toggle="modal" data-target="#try-converted-container" data-dismiss="modal" id="try-scored" onClick="scoreHandler(this.id)">Try for <span class="teamInPossessionReplacer">Team in Possession</span></button>
-                        <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-possession" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="dropgoal-scored" onClick="scoreHandler(this.id)">Drop Goal for <span class="teamInPossessionReplacer">Team in Possession</span></button>
-                    </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Type of score for team in possession:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-possession" data-toggle="modal" data-target="#try-converted-container" data-dismiss="modal" id="try-scored" onClick="scoreHandler(this.id)">Try for <span class="teamInPossessionReplacer">Team in Possession</span></button>
+                    <button type="button" class="btn btn-outline-secondary btn-block mb-3 color-possession" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="dropgoal-scored" onClick="scoreHandler(this.id)">Drop Goal for <span class="teamInPossessionReplacer">Team in Possession</span></button>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
@@ -482,19 +493,21 @@
     <!-- #################### -->
 
     <div class="modal fade" id="try-converted-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Try converted?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="try-converted" onClick="conversionHandler(this.id)">Yes</button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="con-missed" onClick="conversionHandler(this.id)">No</button>
-                    </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Try converted?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="try-converted" onClick="conversionHandler(this.id)">Yes</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="con-missed" onClick="conversionHandler(this.id)">No</button>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
@@ -505,20 +518,22 @@
     <!-- ######################## -->
 
     <div class="modal fade" id="kick-restart-recover-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Who recovered the restart?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="team-1-restart" onClick="restartHandler(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
-                        <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal" id="team-2-restart" onClick="restartHandler(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="neither-restart" onClick="restartHandler(this.id)">Neither</button>
-                    </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Who recovered the restart?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="team-1-restart" onClick="restartHandler(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
+                    <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal" id="team-2-restart" onClick="restartHandler(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="neither-restart" onClick="restartHandler(this.id)">Neither</button>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
@@ -529,21 +544,22 @@
     <!-- #################### -->
 
     <div class="modal fade" id="lineout-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Who won the lineout?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> 
-                    <div class="modal-body">
-                        <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="1-wins-lineout" onClick="lineoutHandler(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
-                        <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal" id="2-wins-lineout" onClick="lineoutHandler(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="neither-wins-lineout" onClick="lineoutHandler(this.id)" data-toggle="modal" data-target="#failed-lineout-container">Neither</button>
-                    </div>
-                    </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Who won the lineout?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                <div class="modal-body">
+                    <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="1-wins-lineout" onClick="lineoutHandler(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
+                    <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal" id="2-wins-lineout" onClick="lineoutHandler(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="neither-wins-lineout" onClick="lineoutHandler(this.id)" data-toggle="modal" data-target="#failed-lineout-container">Neither</button>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
@@ -554,59 +570,63 @@
     <!-- ################## -->
 
     <div class="modal fade" id="failed-lineout-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">How is play continuing?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> 
-                    <div class="modal-body">
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="flineout-reset" onClick="failedLineoutHandler(this.id)">Lineout Reset</button>
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="flineout-not-straight" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#lineout-container">Throw Not Straight</button>
-                        <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="flineout-pk-one" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#penalty-choice-container">Penalty against <span class="teamOneInputReplacer">Team 1</span></button>
-                        <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal" id="flineout-pk-two" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#penalty-choice-container">Penalty against <span class="teamTwoInputReplacer">Team 2</span></button>
-                        <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="flineout-fk-one" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#freekick-choice-container">Free-kick against <span class="teamOneInputReplacer">Team 1</span></button>
-                        <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal"id="flineout-fk-two" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#freekick-choice-container">Free-kick against <span class="teamTwoInputReplacer">Team 2</span></button>
-                    </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">How is play continuing?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                <div class="modal-body">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="flineout-reset" onClick="failedLineoutHandler(this.id)">Lineout Reset</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="flineout-not-straight" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#lineout-container">Throw Not Straight</button>
+                    <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="flineout-pk-one" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#penalty-choice-container">Penalty against <span class="teamOneInputReplacer">Team 1</span></button>
+                    <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal" id="flineout-pk-two" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#penalty-choice-container">Penalty against <span class="teamTwoInputReplacer">Team 2</span></button>
+                    <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="flineout-fk-one" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#freekick-choice-container">Free-kick against <span class="teamOneInputReplacer">Team 1</span></button>
+                    <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal"id="flineout-fk-two" onClick="failedLineoutHandler(this.id)" data-toggle="modal" data-target="#freekick-choice-container">Free-kick against <span class="teamTwoInputReplacer">Team 2</span></button>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <!-- ################## -->
     <!-- Scrum Winner Modal -->
     <!-- ################## -->
 
     <div class="modal fade" id="scrum-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Who won the scrum?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> 
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="1-wins-scrum" onClick="scrumHandler(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal" id="2-wins-scrum" onClick="scrumHandler(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>            
-                                </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Who won the scrum?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary color-team1" data-dismiss="modal" id="1-wins-scrum" onClick="scrumHandler(this.id)"><span class="teamOneInputReplacer">Team 1</span></button>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-toggle="modal" data-target="#failed-scrum-container" id="neither-wins-scrum" onClick="scrumHandler(this.id)">Neither</button>
-                                </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary color-team2" data-dismiss="modal" id="2-wins-scrum" onClick="scrumHandler(this.id)"><span class="teamTwoInputReplacer">Team 2</span></button>            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-toggle="modal" data-target="#failed-scrum-container" id="neither-wins-scrum" onClick="scrumHandler(this.id)">Neither</button>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
@@ -617,68 +637,72 @@
     <!-- ################## -->
 
     <div class="modal fade" id="failed-scrum-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">How is play continuing?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> 
-                    <div class="modal-body">
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fscrum-reset" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#scrum-container">Scrum Reset</button>
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fscrum-pk-one color-team1" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#penalty-choice-container">Penalty against <span class="teamOneInputReplacer">Team 1</span></button>
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fscrum-pk-two color-team2" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#penalty-choice-container">Penalty against <span class="teamTwoInputReplacer">Team 2</span></button>
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fscrum-fk-one color-team1" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#freekick-choice-container">Free-kick against <span class="teamOneInputReplacer">Team 1</span></button>
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"id="fscrum-fk-two color-team2" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#freekick-choice-container">Free-kick against <span class="teamTwoInputReplacer">Team 2</span></button>
-                    </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">How is play continuing?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                <div class="modal-body">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fscrum-reset" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#scrum-container">Scrum Reset</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fscrum-pk-one color-team1" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#penalty-choice-container">Penalty against <span class="teamOneInputReplacer">Team 1</span></button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fscrum-pk-two color-team2" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#penalty-choice-container">Penalty against <span class="teamTwoInputReplacer">Team 2</span></button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fscrum-fk-one color-team1" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#freekick-choice-container">Free-kick against <span class="teamOneInputReplacer">Team 1</span></button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"id="fscrum-fk-two color-team2" onClick="failedScrumHandler(this.id)" data-toggle="modal" data-target="#freekick-choice-container">Free-kick against <span class="teamTwoInputReplacer">Team 2</span></button>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <!-- #################### -->
     <!-- Penalty Choice Modal -->
     <!-- #################### --> 
 
     <div class="modal fade" id="penalty-choice-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Penalty option taken</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> 
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="pk-quick-tap" onClick="penaltyChoiceHandler(this.id)">Quick tap</button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#kick-at-goal-container" data-dismiss="modal" id="pk-at-goal" onClick="penaltyChoiceHandler(this.id)">Kick for points</button>
-                                </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Penalty option taken</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="pk-quick-tap" onClick="penaltyChoiceHandler(this.id)">Quick tap</button>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#lineout-container" data-dismiss="modal" id="pk-to-touch" onClick="penaltyChoiceHandler(this.id)">Kicked to touch</button>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="pk-kicked-in" onClick="penaltyChoiceHandler(this.id)">Kicked, still in play</button>
-                                </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#kick-at-goal-container" data-dismiss="modal" id="pk-at-goal" onClick="penaltyChoiceHandler(this.id)">Kick for points</button>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#scrum-container" data-dismiss="modal" id="pk-scrum" onClick="penaltyChoiceHandler(this.id)">Scrum option</button>
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#lineout-container" data-dismiss="modal" id="pk-to-touch" onClick="penaltyChoiceHandler(this.id)">Kicked to touch</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="pk-kicked-in" onClick="penaltyChoiceHandler(this.id)">Kicked, still in play</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#scrum-container" data-dismiss="modal" id="pk-scrum" onClick="penaltyChoiceHandler(this.id)">Scrum option</button>
                             </div>
                         </div>
                     </div>
-                </div> 
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
+                </div>
+            </div> 
         </div>
     </div>
 
@@ -687,35 +711,37 @@
     <!-- ###################### -->          
                         
     <div class="modal fade" id="freekick-choice-container" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Free-kick option taken</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="False">&times;</span>
-                        </button>
-                    </div> 
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">   
-                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fk-quick-tap" onClick="freekickChoiceHandler(this.id)">Quick tap</button>
-                                </div>
-                                <div class="col">   
-                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#lineout-container" data-dismiss="modal" id="fk-to-touch" onClick="freekickChoiceHandler(this.id)">Kicked to touch</button>
-                                </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Free-kick option taken</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="False">&times;</span>
+                    </button>
+                </div> 
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">   
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="fk-quick-tap" onClick="freekickChoiceHandler(this.id)">Quick tap</button>
                             </div>
-                            <div class="row">
-                                <div class="col">   
-                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="fk-kicked-in" onClick="freekickChoiceHandler(this.id)">Kicked, still in play</button>
-                                </div>
-                                <div class="col">   
-                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#scrum-container" data-dismiss="modal" id="fk-scrum" onClick="freekickChoiceHandler(this.id)">Scrum option</button>
-                                </div>
+                            <div class="col">   
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#lineout-container" data-dismiss="modal" id="fk-to-touch" onClick="freekickChoiceHandler(this.id)">Kicked to touch</button>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">   
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#kick-restart-recover-container" data-dismiss="modal" id="fk-kicked-in" onClick="freekickChoiceHandler(this.id)">Kicked, still in play</button>
                             </div>
+                            <div class="col">   
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#scrum-container" data-dismiss="modal" id="fk-scrum" onClick="freekickChoiceHandler(this.id)">Scrum option</button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
@@ -724,47 +750,24 @@
 
 
     <div class="modal fade" id="halftime-stats" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-body">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Stats at Halftime</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="false">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <button type="button" class="btn btn-primary" id="start-secondhalf" onClick="startWatch()" data-dismiss="modal" data-toggle="modal" data-target="#kick-recover-container">Start Second Half</button>
-                    </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Stats at Halftime</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary" id="start-secondhalf" onClick="startWatch()" data-dismiss="modal" data-toggle="modal" data-target="#kick-recover-container">Start Second Half</button>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-danger mb-3" onClick="stopWatch()">Pause Clock</button>
+                    <button type="button" class="btn btn-success mb-3" onClick="restartWatch()">Start Clock</button>
                 </div>
             </div>
         </div>
     </div>
-
-<!--
-    <div class = "floating-containers" id="kick-at-goal-container">
-        <p>Was the kick successful?</p>
-        <button type="button" class="subevent-button" id="pg-successful" onClick="pgHandler(this.id)">Yes</button>
-        <button type="button" class="subevent-button" id="pg-to-twenty-two" onClick="pgHandler(this.id)">No, 22 drop out</button>
-        <button type="button" class="subevent-button" id="pg-one-recovers" onClick="pgHandler(this.id)">No, recovered by <span class="teamOneInputReplacer"></span></button>
-        <button type="button" class="subevent-button" id="pg-two-recovers" onClick="pgHandler(this.id)">No, recovered by <span class="teamTwoInputReplacer"></span></button>
-        <button type="button" class="cancel-button" id="cancel-pg" onClick="pgHandler(this.id)">x</button>
-    </div>   
-
-    <div class = "floating-containers" id="mark-choice-container">
-        <p>Mark Options</p>
-        <button type="button" class="subevent-button" id="mark-quick-tap" onClick="markChoiceHandler(this.id)"><span class="">Quick tap</span></button>
-        <button type="button" class="subevent-button" id="mark-to-touch" onClick="markChoiceHandler(this.id)"><span class="">Kicked to touch</span></button>
-        <button type="button" class="subevent-button" id="mark-kicked-in" onClick="markChoiceHandler(this.id)"><span class="">Kicked, still in play</span></button>
-        <button type="button" class="cancel-button" id="cancel-mark" onClick="markChoiceHandler(this.id)">x</button>
-    </div>   
-
-    <div class = "floating-containers" id="">
-            
-            <button type="button" class="cancel-button" id="cancel-out-of-play" onClick="outOfPlayHandler(this.id)">x</button>
-    </div>
--->
- 
     
     <table id="possession-clock-table">
         <tr>

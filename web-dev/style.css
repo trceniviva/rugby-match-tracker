@@ -1,5 +1,5 @@
 p {
-    color: #10395c;
+    color: #FFFFFF;
 }
 
 table {
@@ -40,8 +40,7 @@ th, td {
         background-color: darkgreen;
         border: 2px solid white;
         color: white;
-        height:400px;
-        max-width: 220px;
+        height:250px;
     }
 
     #notes-below-field {
