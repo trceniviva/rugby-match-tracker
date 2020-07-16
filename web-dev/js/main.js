@@ -18,7 +18,7 @@ const game = {
     tackles: { half: [], count: 0, time: [], quadrant: [], q1: 0, q2: 0, q3: 0, q4: 0 },
     teamOne: {
         name: 'Team 1',
-        color: '173, 158, 110',
+        teamColor: '173, 158, 110',
         textColor: '255, 255, 255',
         borderColor: 'transparent',
         openingKick: false,
@@ -40,7 +40,7 @@ const game = {
     },
     teamTwo: {
         name: 'Team 1',
-        color: '16, 57, 92',
+        teamColor: '16, 57, 92',
         textColor: '255, 255, 255',
         borderColor: 'transparent',
         openingKick: false,
@@ -100,7 +100,6 @@ const teamOneInput = document.getElementById("team-one")
 const teamTwoInput = document.getElementById("team-two")
 const teamOneColorInput = document.getElementById("team-one-color")
 const teamTwoColorInput = document.getElementById("team-two-color")
-
 const allTeamOneToReplace = document.querySelectorAll(".teamOneInputReplacer")
 const allTeamTwoToReplace = document.querySelectorAll(".teamTwoInputReplacer")
 const allTeamInPossessionToReplace = document.querySelectorAll(".teamInPossessionReplacer")
@@ -116,31 +115,14 @@ const phaseCountTracker = document.getElementById("phase-count")
 
 var matchClockStatus = "Paused"
 
-function textColors() {
-    oneRed = game.teamOne.color.split(",")[0]
-    oneGreen = game.teamOne.color.split(",")[1]
-    oneBlue = game.teamOne.color.split(",")[2]
-    if ((oneRed * 0.299 + oneGreen * 0.587 + oneBlue * 0.114) < 120) {
-        game.teamOne.textColor = '#FFFFFF';
-        game.teamOne.borderColor = 'transparent'
-    }
-    else {
-        game.teamOne.textColor = '#000000';
-        game.teamOne.borderColor = "#000000"
-    }
+game.teamOne.teamColor = teamOneColorInput.value
+game.teamTwo.teamColor = teamTwoColorInput.value
 
-    twoRed = game.teamTwo.color.split(",")[0]
-    twoGreen = game.teamTwo.color.split(",")[1]
-    twoBlue = game.teamTwo.color.split(",")[2]
-    if ((twoRed * 0.299 + twoGreen * 0.587 + twoBlue * 0.114) < 120) {
-        game.teamTwo.textColor = '#FFFFFF';
-        game.teamTwo.borderColor = 'transparent'
-    }
-    else {
-        game.teamTwo.textColor = '#000000';
-        game.teamTwo.borderColor = "#000000";
-    }
+function textColors() {
+    game.teamOne.textColor = teamInfoForm.oneFontColor.value;
+    game.teamTwo.textColor = teamInfoForm.twoFontColor.value;
 }
+
 
 function setStart() {
     if (teamInfoForm.startSide.value === 'one-starts-left') {
@@ -164,30 +146,29 @@ function setStart() {
 function getNames() {
     game.teamOne.name = teamOneInput.value;
     game.teamTwo.name = teamTwoInput.value;
-    game.teamOne.color = teamOneColorInput.value;
-    game.teamTwo.color = teamTwoColorInput.value;
+    game.teamOne.teamColor = teamOneColorInput.value;
+    game.teamTwo.teamColor = teamTwoColorInput.value;
 }
 
 function startWatch() {
-    if (matchClockStatus != "Running") {
-        matchClockStatus = "Running";
-        if (seconds === 60) { seconds = 0; minutes = minutes += 1; }
-        if (tenthseconds === 10) { tenthseconds = 0; seconds = seconds += 1; }
-        mins = (minutes < 10) ? ('0' + minutes + ':') : (minutes + ':');
-        secs = (seconds < 10) ? ('0' + seconds + ':') : (seconds + ':');
-        tnthsecs = (tenthseconds < 10) ? ('0' + tenthseconds) : (tenthseconds);
-        matchTime = mins + secs + tnthsecs;
-        gameClock.innerHTML = matchTime;
-        tenthseconds++;
-        clearTime = setTimeout("startWatch()", 100);
-    } else { }
+    if (seconds === 60) { seconds = 0; minutes = minutes += 1; }
+    if (tenthseconds === 10) { tenthseconds = 0; seconds = seconds += 1; }
+    mins = (minutes < 10) ? ('0' + minutes + ':') : (minutes + ':');
+    secs = (seconds < 10) ? ('0' + seconds + ':') : (seconds + ':');
+    tnthsecs = (tenthseconds < 10) ? ('0' + tenthseconds) : (tenthseconds);
+    matchTime = mins + secs + tnthsecs;
+    gameClock.innerHTML = matchTime;
+    tenthseconds++;
+    clearTime = setTimeout("startWatch()", 100);
+    matchClockStatus = "Running";
 }
 
 function startTime() {
     tenthseconds = 0;
     seconds = 0;
     minutes = 0;
-    startWatch();
+    if (matchClockStatus != "Running") {
+    startWatch();};
 }
 
 const teamOnePossessionClock = document.getElementById("team-1-possession-clock");
@@ -199,7 +180,7 @@ function runPossessionClockOne() {
     if (twoClockRunning === true) { stopWatchTwo(); twoClockRunning = false; };
     oneClockRunning = true;
     if (secondsOne === 60) { secondsOne = 0; minutesOne = minutesOne += 1; }
-    if (tenthsecondsOne === 100) { tenthsecondsOne = 0; secondsOne = secondsOne += 1; }
+    if (tenthsecondsOne === 10) { tenthsecondsOne = 0; secondsOne = secondsOne += 1; }
     minsOne = (minutesOne < 10) ? ('0' + minutesOne + ':') : (minutesOne + ':');
     secsOne = (secondsOne < 10) ? ('0' + secondsOne + ':') : (secondsOne + ':');
     tnthsecsOne = (tenthsecondsOne < 10) ? ('0' + tenthsecondsOne) : (tenthsecondsOne);
@@ -253,7 +234,7 @@ function stopWatch() {
 }
 
 function restartWatch() {
-    startWatch();
+    startTime();
     if (game.possession === game.teamOne.name) {
         runPossessionClockOne();
     } else if (game.possession === game.teamTwo.name) {
@@ -292,39 +273,39 @@ function updateNames() {
 }
 
 function updateColors() {
-    for (i = 0; i < allTeamOneColors.length; i++) { allTeamOneColors[i].style.backgroundColor = game.teamOne.color; };
+    for (i = 0; i < allTeamOneColors.length; i++) { allTeamOneColors[i].style.backgroundColor = game.teamOne.teamColor; };
     for (i = 0; i < allTeamOneColors.length; i++) { allTeamOneColors[i].style.color = game.teamOne.textColor; };
-    for (i = 0; i < allTeamOneColors.length; i++) { allTeamOneColors[i].style.border = "1px solid " + game.teamOne.borderColor; };
-    for (i = 0; i < allTeamTwoColors.length; i++) { allTeamTwoColors[i].style.backgroundColor = game.teamTwo.color; };
+    for (i = 0; i < allTeamOneColors.length; i++) { allTeamOneColors[i].style.border = "1px solid " + game.teamOne.textColor; };
+    for (i = 0; i < allTeamTwoColors.length; i++) { allTeamTwoColors[i].style.backgroundColor = game.teamTwo.teamColor; };
     for (i = 0; i < allTeamTwoColors.length; i++) { allTeamTwoColors[i].style.color = game.teamTwo.textColor; };
-    for (i = 0; i < allTeamTwoColors.length; i++) { allTeamTwoColors[i].style.border = "1px solid " + game.teamTwo.borderColor; };
+    for (i = 0; i < allTeamTwoColors.length; i++) { allTeamTwoColors[i].style.border = "1px solid " + game.teamTwo.textColor; };
 }
 
 function updatePossession() {
     for (i = 0; i < allTeamInPossessionToReplace.length; i++) { allTeamInPossessionToReplace[i].innerHTML = " " + game.possession; };
     if (game.possession === game.teamOne.name) {
         game.action = ' attacking from '
-        for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.backgroundColor = game.teamOne.color; };
+        for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.backgroundColor = game.teamOne.teamColor; };
         for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.color = game.teamOne.textColor; };
-        for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.border = "1px solid " + game.teamOne.borderColor; };
+        for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.border = "1px solid " + game.teamOne.textColor; };
 
-        for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.backgroundColor = game.teamTwo.color; };
+        for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.backgroundColor = game.teamTwo.teamColor; };
         for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.color = game.teamTwo.textColor; };
-        for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.border = "1px solid " + game.teamTwo.borderColor; };
+        for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.border = "1px solid " + game.teamTwo.textColor; };
 
         for (i = 0; i < allTeamOnDefenseToReplace.length; i++) { allTeamOnDefenseToReplace[i].innerHTML = " " + game.teamTwo.name; };
     } else if (game.possession === game.teamTwo.name) {
         game.action = ' defending on '
-        for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.backgroundColor = game.teamTwo.color; };
+        for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.backgroundColor = game.teamTwo.teamColor; };
         for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.color = game.teamTwo.textColor; };
-        for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.border = "1px solid " + game.teamTwo.borderColor; };
+        for (i = 0; i < allTeamPossessionColors.length; i++) { allTeamPossessionColors[i].style.border = "1px solid " + game.teamTwo.textColor; };
 
-        for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.backgroundColor = game.teamOne.color; };
+        for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.backgroundColor = game.teamOne.teamColor; };
         for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.color = game.teamOne.textColor; };
-        for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.border = "1px solid " + game.teamOne.borderColor; };
+        for (i = 0; i < allTeamDefenseColors.length; i++) { allTeamDefenseColors[i].style.border = "1px solid " + game.teamOne.textColor; };
 
         for (i = 0; i < allTeamOnDefenseToReplace.length; i++) { allTeamOnDefenseToReplace[i].innerHTML = " " + game.teamOne.name; };
-    }
+    };
 }
 
 

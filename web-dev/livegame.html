@@ -95,7 +95,7 @@
     <div class="container" id="notes-below-field">
         <div class="row mx-auto text-center">
             <div class="col d-flex">
-                <p><span id="poss-direction"></span> Series <span id="series-count"></span>. Phase <span
+                <p class="text-dark"><span id="poss-direction"></span> Series <span id="series-count"></span>. Phase <span
                         id="phase-count"></span>.</p>
             </div>
         </div>
@@ -193,7 +193,7 @@
                         <div class="form-inline">
                             <div class="w-50">
                                 <label for="team-one">Team 1 Name</label>
-                                <input class="form-control" type="text" id="team-one" name="team-one" placeholder="GWU">
+                                <input class="form-control" type="text" id="team-one" name="team-one" placeholder="England">
                             </div>
                             <div class="w-25 ml-3">
                                 <label for="team-one-color" class="text-nowrap">Team 1 Color</label>
@@ -201,11 +201,26 @@
                                     value="#ad9e6e">
                             </div>
                         </div>
+                        <div class="d-inline">
+                            <p class="text-dark d-inline">Font Color:</p>
+                            <div class="form-check d-inline">
+                                <input class="form-check-input" type="radio" id="team-one-black-font" name="oneFontColor"
+                                    value="#000000">
+                                <label class="form-check-label" for="team-one-black-font">Black</label>
+                            </div>
+                            <div class="form-check d-inline">
+                                <input class="form-check-input" type="radio" id="team-one-white-font" name="oneFontColor"
+                                    value="#FFFFFF">
+                                <label class="form-check-label" for="team-one-white-font">White</label>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
                         <div class="form-inline">
                             <div class="w-50">
                                 <label for="team-two">Team 2 Name</label>
                                 <input class="form-control" type="text" id="team-two" name="team-two"
-                                    placeholder="Catholic">
+                                    placeholder="South Africa">
                             </div>
                             <div class="w-25 ml-3">
                                 <label for="team-two-color" class="text-nowrap">Team 2 Color</label>
@@ -213,6 +228,20 @@
                                     value="#10395c">
                             </div>
                         </div>
+                        <div class="d-inline">
+                            <p class="text-dark d-inline">Font Color:</p>
+                            <div class="form-check d-inline">
+                                <input class="form-check-input" type="radio" id="team-two-black-font" name="twoFontColor"
+                                    value="#000000">
+                                <label class="form-check-label" for="team-two-black-font">Black</label>
+                            </div>
+                            <div class="form-check d-inline">
+                                <input class="form-check-input" type="radio" id="team-two-white-font" name="twoFontColor"
+                                    value="#FFFFFF">
+                                <label class="form-check-label" for="team-two-white-font">White</label>
+                            </div>
+                        </div>
+                        <br>
                         <br>
                         <h5>Who kicks?</h2>
                             <div class="form-check">
@@ -303,12 +332,12 @@
                         <div class="row">
                             <div class="col">
                                 <button type="button" class="btn btn-block color-possession mb-3" id="turnover-dropped"
-                                    onClick="turnoverHandler(this.id);restartWatch()" data-dismiss="modal">Dropped in
+                                    onClick="turnoverHandler(this.id)" data-dismiss="modal">Dropped in
                                     open play by<span class="teamInPossessionReplacer">Team 1</span></button>
                             </div>
                             <div class="col">
                                 <button type="button" class="btn btn-block color-possession mb-3"
-                                    id="turnover-breakdown" onClick="turnoverHandler(this.id);restartWatch()"
+                                    id="turnover-breakdown" onClick="turnoverHandler(this.id)"
                                     data-dismiss="modal">Lost in tackle, ruck, or maul by <span
                                         class="teamInPossessionReplacer">Team 1</span></button>
                             </div>
@@ -316,12 +345,12 @@
                         <div class="row">
                             <div class="col">
                                 <button type="button" class="btn btn-block color-possession mb-3" id="turnover-kicked"
-                                    onClick="turnoverHandler(this.id);restartWatch()" data-dismiss="modal">Kicked away
+                                    onClick="turnoverHandler(this.id)" data-dismiss="modal">Kicked away
                                     by<span class="teamInPossessionReplacer">Team 2</span></button>
                             </div>
                             <div class="col">
                                 <button type="button" class="btn btn-block color-possession mb-3"
-                                    id="turnover-intercept" onClick="turnoverHandler(this.id);restartWatch()"
+                                    id="turnover-intercept" onClick="turnoverHandler(this.id)"
                                     data-dismiss="modal">Interception thrown by <span
                                         class="teamInPossessionReplacer">Team 2</span></button>
                             </div>
