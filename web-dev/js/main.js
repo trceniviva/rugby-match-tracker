@@ -113,6 +113,8 @@ const allTeamDefenseColors = document.querySelectorAll(".color-defense")
 const seriesCountTracker = document.getElementById("series-count")
 const phaseCountTracker = document.getElementById("phase-count")
 
+var matchClockStatus = "Paused"
+
 function textColors () {
     oneRed = game.teamOne.color.split(",")[0]
     oneGreen = game.teamOne.color.split(",")[1]
@@ -158,16 +160,19 @@ function getNames () {
 }
 
 function startWatch (  ) {
-    if ( seconds === 60 ) { seconds = 0; minutes = minutes += 1; } 
-    if ( tenthseconds === 10) { tenthseconds = 0; seconds = seconds += 1; }
-    mins = ( minutes < 10 ) ? ( '0' + minutes + ':' ) : ( minutes + ':' ); 
-    secs = ( seconds < 10 ) ? ( '0' + seconds + ':') : ( seconds + ':'); 
-    tnthsecs = (tenthseconds < 10) ? ( '0' + tenthseconds) : (tenthseconds);
-    matchTime = mins + secs + tnthsecs;
-    gameClock.innerHTML = matchTime; 
-    tenthseconds++; 
-    clearTime = setTimeout( "startWatch( )", 100 ); 
+    if (matchClockStatus != "Running") {
+        matchClockStatus = "Running";
+        if ( seconds === 60 ) { seconds = 0; minutes = minutes += 1; } 
+        if ( tenthseconds === 10) { tenthseconds = 0; seconds = seconds += 1; }
+        mins = ( minutes < 10 ) ? ( '0' + minutes + ':' ) : ( minutes + ':' ); 
+        secs = ( seconds < 10 ) ? ( '0' + seconds + ':') : ( seconds + ':'); 
+        tnthsecs = (tenthseconds < 10) ? ( '0' + tenthseconds) : (tenthseconds);
+        matchTime = mins + secs + tnthsecs;
+        gameClock.innerHTML = matchTime; 
+        tenthseconds++; 
+        clearTime = setTimeout( "startWatch()", 100 );} else {}
 }
+
 function startTime() {
     tenthseconds = 0;
     seconds = 0;
@@ -184,7 +189,7 @@ var twoClockRunning = false;
     if (twoClockRunning ===true) { stopWatchTwo(); twoClockRunning = false;};
     oneClockRunning = true;
     if ( secondsOne === 60 ) { secondsOne = 0; minutesOne = minutesOne += 1; } 
-    if ( tenthsecondsOne === 10) { tenthsecondsOne = 0; secondsOne = secondsOne += 1; }
+    if ( tenthsecondsOne === 100) { tenthsecondsOne = 0; secondsOne = secondsOne += 1; }
     minsOne = ( minutesOne < 10 ) ? ( '0' + minutesOne + ':' ) : ( minutesOne + ':' ); 
     secsOne = ( secondsOne < 10 ) ? ( '0' + secondsOne + ':') : ( secondsOne + ':'); 
     tnthsecsOne = (tenthsecondsOne < 10) ? ( '0' + tenthsecondsOne) : (tenthsecondsOne);
@@ -213,7 +218,11 @@ function runPossessionClockTwo (  ) {
 
 function stopWatchTwo( ) {clearTimeout(clearTimeTwo)};
 
-function stopMainWatch() {clearTimeout(clearTime)};
+function stopMainWatch() {
+    if ( matchClockStatus === 'Running') {
+        matchClockStatus = "Paused";
+        clearTimeout(clearTime);
+    } else {} }
 
 function stopPossessionClocks () {
     stopWatchOne();
@@ -226,7 +235,7 @@ function switchPossessionClock () {
     } else {runPossessionClockOne();}
 }
 
-function stopWatch( ) {
+function stopWatch(){
     stopMainWatch();
     stopWatchOne();
     stopWatchTwo();
@@ -308,7 +317,7 @@ function startGameFunctions () {
     getNames();
     updateNames();
     startingSides();
-    startWatch();
+    startTime();
     updateColors();
 };
 
