@@ -78,24 +78,32 @@
 
     <div class="container mt-4 mb-3">
         <div class="row">
+
             <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="far-left"
                 onClick="tackleHandler(this.id)"></div>
+
+            <div class="col-3 text-center font-weight-bold field-quadrant-h2 pt-5" id="far-left-h2"
+                onClick="tackleHandler(this.id)"></div>
+
             <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="center-left"
                 onClick="tackleHandler(this.id)"></div>
+
+            <div class="col-3 text-center font-weight-bold field-quadrant-h2 pt-5" id="center-left-h2"
+                onClick="tackleHandler(this.id)"></div>
+
             <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="center-right"
                 onClick="tackleHandler(this.id)"></div>
+
+            <div class="col-3 text-center font-weight-bold field-quadrant-h2 pt-5" id="center-right-h2"
+                onClick="tackleHandler(this.id)"></div>
+
+
             <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="far-right"
                 onClick="tackleHandler(this.id)"></div>
-        </div>
-        <div class="row">
-            <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="far-left-h2"
+
+            <div class="col-3 text-center font-weight-bold field-quadrant-h2 pt-5" id="far-right-h2"
                 onClick="tackleHandler(this.id)"></div>
-            <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="center-left-h2"
-                onClick="tackleHandler(this.id)"></div>
-            <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="center-right-h2"
-                onClick="tackleHandler(this.id)"></div>
-            <div class="col-3 text-center font-weight-bold field-quadrant pt-5" id="far-right-h2"
-                onClick="tackleHandler(this.id)"></div>
+
         </div>
     </div>
 
@@ -105,8 +113,8 @@
     <div class="container" id="notes-below-field">
         <div class="row mx-auto text-center">
             <div class="col d-flex">
-                <p class="text-dark"><span id="poss-direction"></span> Series <span id="series-count"></span>. Phase <span
-                        id="phase-count"></span>.</p>
+                <p class="text-dark"><span id="poss-direction"></span> Series <span id="series-count"></span>. Phase
+                    <span id="phase-count"></span>.</p>
             </div>
         </div>
     </div>
@@ -203,7 +211,8 @@
                         <div class="form-inline">
                             <div class="w-50">
                                 <label for="team-one">Team 1 Name</label>
-                                <input class="form-control" type="text" id="team-one" name="team-one" placeholder="England">
+                                <input class="form-control" type="text" id="team-one" name="team-one"
+                                    placeholder="England">
                             </div>
                             <div class="w-25 ml-3">
                                 <label for="team-one-color" class="text-nowrap">Team 1 Color</label>
@@ -214,13 +223,13 @@
                         <div class="d-inline">
                             <p class="text-dark d-inline">Font Color:</p>
                             <div class="form-check d-inline">
-                                <input class="form-check-input" type="radio" id="team-one-black-font" name="oneFontColor"
-                                    value="#000000">
+                                <input class="form-check-input" type="radio" id="team-one-black-font"
+                                    name="oneFontColor" value="#000000">
                                 <label class="form-check-label" for="team-one-black-font">Black</label>
                             </div>
                             <div class="form-check d-inline">
-                                <input class="form-check-input" type="radio" id="team-one-white-font" name="oneFontColor"
-                                    value="#FFFFFF">
+                                <input class="form-check-input" type="radio" id="team-one-white-font"
+                                    name="oneFontColor" value="#FFFFFF">
                                 <label class="form-check-label" for="team-one-white-font">White</label>
                             </div>
                         </div>
@@ -241,13 +250,13 @@
                         <div class="d-inline">
                             <p class="text-dark d-inline">Font Color:</p>
                             <div class="form-check d-inline">
-                                <input class="form-check-input" type="radio" id="team-two-black-font" name="twoFontColor"
-                                    value="#000000">
+                                <input class="form-check-input" type="radio" id="team-two-black-font"
+                                    name="twoFontColor" value="#000000">
                                 <label class="form-check-label" for="team-two-black-font">Black</label>
                             </div>
                             <div class="form-check d-inline">
-                                <input class="form-check-input" type="radio" id="team-two-white-font" name="twoFontColor"
-                                    value="#FFFFFF">
+                                <input class="form-check-input" type="radio" id="team-two-white-font"
+                                    name="twoFontColor" value="#FFFFFF">
                                 <label class="form-check-label" for="team-two-white-font">White</label>
                             </div>
                         </div>
@@ -347,9 +356,9 @@
                             </div>
                             <div class="col">
                                 <button type="button" class="btn btn-block color-possession mb-3"
-                                    id="turnover-breakdown" onClick="turnoverHandler(this.id)"
-                                    data-dismiss="modal">Lost in tackle, ruck, or maul by <span
-                                        class="teamInPossessionReplacer">Team 1</span></button>
+                                    id="turnover-breakdown" onClick="turnoverHandler(this.id)" data-dismiss="modal">Lost
+                                    in tackle, ruck, or maul by <span class="teamInPossessionReplacer">Team
+                                        1</span></button>
                             </div>
                         </div>
                         <div class="row">
@@ -422,14 +431,14 @@
                         <div class="row">
                             <div class="col">
                                 <button type="button" class="btn btn-outline-secondary color-defense btn-block mb-3"
-                                    id="twenty-two" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal"
-                                    data-target="#kick-recover-container">22 meter
+                                    id="twenty-two" onClick="outOfPlayHandler(this.id)" data-dismiss="modal"
+                                    data-toggle="modal" data-target="#kick-recover-container">22 meter
                                     drop-out to<span class="teamOnDefenseReplacer">Team 2</span></button>
                             </div>
                             <div class="col">
                                 <button type="button" class="btn btn-outline-secondary color-possession btn-block mb-3"
-                                    id="scrum-five" onClick="outOfPlayHandler(this.id)" data-dismiss="modal" data-toggle="modal"
-                                    data-target="#scrum-container">5 meter
+                                    id="scrum-five" onClick="outOfPlayHandler(this.id)" data-dismiss="modal"
+                                    data-toggle="modal" data-target="#scrum-container">5 meter
                                     scrum to <span class="teamInPossessionReplacer">Team 2</span></button>
                             </div>
                         </div>

@@ -35,6 +35,14 @@ th, td {
     height:200px;
 }
 
+.field-quadrant-h2 {
+    background-color: darkgreen;
+    border: 2px solid white;
+    color: white;
+    height:200px;
+    display:none;
+}
+
 @media only screen and (min-width: 800px) {
     .field-quadrant {
         background-color: darkgreen;
