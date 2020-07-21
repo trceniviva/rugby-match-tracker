@@ -868,50 +868,33 @@ function penaltyChoiceHandler(pkChoice) {
 }
 
 function pgHandler(pgResult) {
+    stopPossessionClocks();
     if (pgResult === 'pg-successful') {
         if (lastInfringement === game.teamTwo.name) {
-            game.teamOne.score.PGs = game.teamOne.score.PGs += 1;
+            game.teamOne.score.PGs.made = game.teamOne.score.PGs.made += 1;
             game.teamOne.score.total = game.teamOne.score.total += 3;
             refreshScores();
             PGScoreRow();
         } else if (game.possession === game.teamOne.name) {
-            game.teamTwo.score.PGs = game.teamTwo.score.PGs += 1;
+            game.teamTwo.score.PGs.made = game.teamTwo.score.PGs.made += 1;
             game.teamTwo.score.total = game.teamTwo.score.total += 3;
             refreshScores();
             PGScoreRow();
         }
     } else if (pgResult === 'pg-to-twenty-two') {
         if (lastInfringement === game.teamTwo.name) {
-            game.teamOne.scorePGs.missed = game.teamOne.score.PGs.missed += 1;
+            game.teamOne.score.PGs.missed = game.teamOne.score.PGs.missed += 1;
         }
         else if (lastInfringement === game.teamOne.name) {
             game.teamTwo.score.PGs.missed = game.teamTwo.score.PGs.missed += 1;
         };
-    } else if (pgResult === 'pg-one-recovers') {
-        runPossessionClockOne();
-        startSeries();
-        game.possession = game.teamOne.name;
-        game.action = ' attacking from '
-        updatePossession();
+    } else if (pgResult === 'pg-inplay') {
         if (lastInfringement === game.teamTwo.name) {
             game.teamOne.score.PGs.missed = game.teamOne.score.PGs.missed += 1;
         } else if (lastInfringement === game.teamOne.name) {
             game.teamTwo.score.PGs.missed = game.teamTwo.score.PGs.missed += 1;
         }
     }
-    else if (pgResult === 'pg-two-recovers') {
-        runPossessionClockTwo();
-        startSeries();
-        game.possession = game.teamTwo.name;
-        game.action = ' defending on '
-        updatePossession();
-        if (lastInfringement === game.teamTwo.name) {
-            game.teamOne.score.PGs.missed = game.teamOne.score.PGs.missed += 1;
-        } else if (lastInfringement === game.teamOne.name) {
-            game.teamTwo.score.PGs.missed = game.teamTwo.score.PGs.missed += 1;
-        }
-    }
-
 }
 
 scrumInfButton.addEventListener('click', function doScrumStuff() {
