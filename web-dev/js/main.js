@@ -621,6 +621,13 @@ function scoreHandler(scoreType) {
         lastScore = game.teamOne.name;
         DGScoreRow();
 
+    } else if (scoreType === 'penalty-goal' && game.possession === game.teamOne.name) {
+        game.teamOne.score.PGs.made = game.teamOne.score.PGs.made += 1;
+        game.teamOne.score.total = game.teamOne.score.total += 3;
+        refreshScores();
+        lastScore = game.teamOne.name;
+        PGScoreRow();
+
     } else if (scoreType === 'try-scored' && game.possession === game.teamTwo.name) {
         game.teamTwo.score.tries = game.teamTwo.score.tries += 1;
         game.teamTwo.score.total = game.teamTwo.score.total += 5;
@@ -635,6 +642,12 @@ function scoreHandler(scoreType) {
         lastScore = game.teamTwo.name;
         DGScoreRow();
 
+    } else if (scoreType === 'penalty-goal' && game.possession === game.teamTwo.name) {
+        game.teamTwo.score.PGs.made = game.teamTwo.score.PGs.made += 1;
+        game.teamTwo.score.total = game.teamTwo.score.total += 3;
+        refreshScores();
+        lastScore = game.teamTwo.name;
+        PGScoreRow();
     }
     else if (scoreType === 'cancel-score-type') {
         scoreTypeContainer.style.display = "none";
@@ -669,7 +682,9 @@ function conversionHandler(conversionSuccessful) {
 }
 
 function restartHandler(getsRestart) {
-    if (getsRestart === 'team-1-restart') {
+    if (getsRestart === 'team-1-restart' || 
+    getsRestart === 'team-1-missed-pg' ||
+    getsRestart === 'team-1-pg-22') {
         possessionDirection.innerHTML = ""
         game.possession = game.teamOne.name;
         game.action = " attacking from ";
@@ -677,7 +692,9 @@ function restartHandler(getsRestart) {
         startSeries();
         updatePossession();
         updatePlayDescription();
-    } else if (getsRestart === 'team-2-restart') {
+    } else if (getsRestart === 'team-2-restart' ||
+    getsRestart === 'team-2-missed-pg' ||
+    getsRestart === 'team-2-pg-22') {
         possessionDirection.innerHTML = ""
         game.possession = game.teamTwo.name;
         game.action = " defending on ";
@@ -685,7 +702,9 @@ function restartHandler(getsRestart) {
         startSeries();
         updatePossession();
         updatePlayDescription();
-    } else if (getsRestart === 'neither-restart') {
+    } else if (getsRestart === 'neither-restart' ||
+    getsRestart === 'neither-missed-pg' || 
+    getsRestart === 'neither-pg-22') {
         nonePossessionRow();
     };
 
