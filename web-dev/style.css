@@ -1,5 +1,5 @@
-p {
-    color: #FFFFFF;
+html {
+    box-sizing: inherit;
 }
 
 table {
@@ -56,4 +56,9 @@ th, td {
         flex-direction: row;
         align-content: space-around;
     }
+}
+
+.home-sections {
+    height:200px;
+    align-content: center;
 }
